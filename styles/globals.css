@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  :root {
+
+    --background: #ecf4f5;
+    --foreground: #101111;
+  
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+  
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+  
+    --card: 244, 251, 255;
+    --card-foreground: 240 10% 3.9%;
+  
+    --border: 193, 201, 201;
+    --input: 240 5.9% 90%;
+  
+    --primary: 49, 79%, 55%;
+    --primary-foreground: 240 5.9% 10%;
+  
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+  
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: ;
+  
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+  
+    --ring: 240 5% 64.9%;
+  
+    --radius: 0.5rem;
+  
+    --primaryColor: #eed45e;
+    --secondaryColor: #eed45e;
+    --shadow: rgba(0, 0, 0, 0.05);
+    --glow: rgba(255, 255, 255, 0.05);
+    --transparent: rgba(211, 216, 218, 0.5);
+    --transparent-glass: rgba(211, 216, 218, 0.1);
+    --backdrop: rgba(211, 216, 218, 0.6);
+    --border1: rgb(211, 216, 218);
+    --accent1: #948f7a;
+    --accent2: rgb(231, 198, 51);
+    --card1: rgb(56, 59, 59,.8);
+    --dropdown: rgb(56, 59, 59);
+    --btn-bg: linear-gradient(145deg, #171717, #444245);
+    --btn-bg-color: linear-gradient(145deg, #d1c689, #dddbc5);
+    --btn-bg-color2: linear-gradient(145deg, #fde0a1, #fabd4b);
+    --btn-bg2: linear-gradient(145deg, #262626, #606060);
+    --btn-glow: rgb(125, 124, 126);
+    --btn-shadow: rgb(28, 28, 28);
+    --btn-glow2: rgb(82, 82, 82);
+    --btn-shadow2: rgb(28, 28, 28);
+    --btn-border: rgb(20, 20, 20);
+    --btn-border2: rgb(30, 30, 30);
+  }
+  
+
+  .dark {
+
+    --background: #282929;
+    --foreground: #e1e6eb;
+  
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+  
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+  
+    --card: 49, 51, 51;
+    --card-foreground: 0 0% 98%;
+  
+    --border: 97, 99, 102;
+    --input: 240 3.7% 15.9%;
+  
+    --primary: 49, 79%, 55%;
+    --primary-foreground: 240 5.9% 10%;
+  
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+  
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: ;
+  
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+  
+    --ring: 240 3.7% 15.9%;
+  
+  
+    width:100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    /* background-color: #282929; */
+    color: #e1e6eb;
+    --primaryColor: #e1e6eb;
+    --shadow: rgba(0, 0, 0, 0.06);
+    --glow: rgba(255, 255, 255, 0.02);
+    --transparent: rgba(74, 77, 78, 0.7);
+    --transparent-glass: rgba(74, 77, 78, 0.05);
+    --backdrop: rgba(74, 77, 78, 0.8);
+    --border1: rgb(97, 99, 102);
+    --card1: rgb(49, 51, 51);
+    --dropdown: rgb(49, 51, 51,.98);
+    --accent1: #948f7a;
+    --accent2: hsl(49, 79%, 55%);
+    
+    --btn-bg: linear-gradient(145deg, #171717, #444245);
+    --btn-bg2: linear-gradient(145deg, #262626, #606060);
+    --btn-bg-color: linear-gradient(145deg, #fdad17, #ffd375);
+    --btn-bg-color2: linear-gradient(145deg, #fde0a1, #fabd4b);
+    --btn-glow: rgb(125, 124, 126);
+    --btn-shadow: rgb(28, 28, 28);
+    --btn-glow2: rgb(63, 62, 62);
+    --btn-shadow2: rgb(28, 28, 28);
+    --btn-border: rgb(30, 30, 30);
+    --btn-border2: rgb(40, 40, 40);
+  
+  }
+  
+
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-display: swap;
+}

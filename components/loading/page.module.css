@@ -1,0 +1,131 @@
+.container {
+    margin-top: -75px;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 100vh;
+
+}
+.container .loader {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    margin-top: 400px;
+    margin: auto 0;
+    animation: fadeIn 1s;
+}
+.container .loader span{
+    position: absolute;
+    top: 0;
+    right: 25%;
+    width: 150%;
+    height: 150%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--btn-bg-color2);
+    border: 1px solid var(--border1);
+    border-radius: 50%;
+    box-shadow: inset 1px 1px 4px var(--btn-glow),
+                inset -4px -4px 10px var(--btn-shadow2);
+    animation: animate ease-in-out 2s infinite;
+}
+.container .loader span:nth-child(2){
+    left: 25%;
+    background: var(--transparent-glass);
+    box-shadow: inset 6px 6px 10px var(--btn-glow),
+                inset -6px -6px 10px var(--btn-shadow);
+    backdrop-filter: saturate(140%) blur(6px) !important;
+    border: 1px solid var(--border1);
+    animation-delay: 1s;
+}
+@keyframes animate {
+    0%,100%  { transform: translateX(-60px); }
+    50% { transform: translateX(60px); }
+  }
+
+
+/*Shadow*/
+
+.container .loader span:before{
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -20px;
+    width: 140%;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(var(--shadow),transparent,transparent);
+}
+
+/*Loader #2*/
+
+.container2 {
+    margin-top: -75px;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 100vh;
+
+}
+.container2 .loader2 {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin-top: 400px;
+}
+.container2 .loader2 span:nth-child(1){
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    bottom: 10px;
+    border-radius: 50%;
+    background: var(--transparent-glass);
+    box-shadow: inset 6px 6px 10px var(--btn-glow),
+                inset -6px -6px 10px var(--btn-shadow);
+    backdrop-filter: saturate(140%) blur(10px) !important;
+    border: 1px solid var(--border1);
+}
+.container2 .loader2 span:nth-child(2){
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    animation: animate2 1s linear infinite;
+}
+@keyframes animate2 {
+    0%  { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+/*Shadow*/
+
+.container2 .loader2 span:nth-child(2)::before{
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: var(--btn-bg-color2);
+}
+
+@keyframes fadeIn {
+    from   { transform: rotate(-1deg); opacity: 0;}
+    
+    to { transform: rotate(0deg); opacity: 1;}
+  }

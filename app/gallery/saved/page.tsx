@@ -1,0 +1,10 @@
+import UnderConstruction from '@/components/under_construction'
+import React from 'react'
+
+const Gallery = () => {
+  return (
+    <UnderConstruction title={'Saved Items'} date={''}/>
+  )
+}
+
+export default Gallery
