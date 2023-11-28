@@ -10,8 +10,8 @@ export const env = createEnv({
     // DATABASE_URL: z.string('mongodb+srv://sofoniasmelesse:zPwqM3SNElgoIuWQ@cluster47.4x7suhs.mongodb.net/test?retryWrites=true&w=majority'),
     NODE_ENV: z.enum(["development", "test", "production"]),
     // CLERK_SECRET_KEY: z.string('sk_test_RChscSwKLC1wixP2fYYpjZoHUWqb0QwyQZCIK0pY81'),
-    // RESEND_API_KEY: z.string("re_DezGELzD_6k9PMZrR4uNy8dDS3s44RjDH"),
-    // EMAIL_FROM_ADDRESS: z.string().email("cto@gebeyaw.com"),
+    RESEND_API_KEY: z.string("re_DezGELzD_6k9PMZrR4uNy8dDS3s44RjDH"),
+    EMAIL_FROM_ADDRESS: z.string().email("cto@gebeyaw.com"),
     
     // UPLOADTHING_SECRET: z.string("sk_live_630074e7a117be444d0929d1e3d42d3de2f0c02f810cdcff870f4b0047a49bcb"),
     // UPLOADTHING_APP_ID: z.string("pjkq008pqs"),
@@ -56,8 +56,8 @@ export const env = createEnv({
     // POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     // POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
 
-    // RESEND_API_KEY: process.env.RESEND_API_KEY,
-    // EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
     // UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
     // UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     // STRIPE_API_KEY: process.env.STRIPE_API_KEY,
