@@ -34,6 +34,7 @@
     "@tanstack/react-table": "^8.10.7",
     "appwrite": "^13.0.0",
     "axios": "^1.6.2",
+    "chapa": "^1.0.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
