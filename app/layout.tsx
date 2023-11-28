@@ -2,9 +2,11 @@ import '@/styles/globals.css'
 import { GlobalNav } from '@/components/layouts/sidenav'
 import { Toaster } from "@/components/ui/toaster"
 import { Providers } from '@/components/providers'
+import { Suspense } from 'react'
+import Nav from '@/components/layouts/sidedata'
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -14,7 +16,9 @@ export default function RootLayout({
       <body>
         <Providers attribute="class" defaultTheme="system" enableSystem>
           <div className="bg-[url('/grid.svg')] pb-36 pt-16 min-h-screen">
-              <GlobalNav />
+            <Suspense fallback = {<GlobalNav apiLimitCount = {0}/>}>
+              {await Nav()}
+            </Suspense>
               <div className="lg:pl-72">
                 <div className="mx-auto max-w-7xl  space-y-8 px-2 lg:px-8 lg:py-8">
                   <div className="bg-card rounded-lg p-px shadow-md">

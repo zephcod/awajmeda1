@@ -3,9 +3,9 @@ const axios = require("axios");
 
 
 export const getTextImage = async (data) => {
-
+console.log(data.prompt)
   const encodedParams = new URLSearchParams();
-  encodedParams.append("prompt", data);
+  encodedParams.append("prompt", data.prompt);
   encodedParams.append("negative_prompt", "ugly, poorly drawn, deformed, deformed limbs");
   encodedParams.append("guidance", "8");
   encodedParams.append("seed", "568542368");
@@ -24,6 +24,7 @@ export const getTextImage = async (data) => {
   };
 
   let imgsrc = ''
+
 await axios.request(options).then(function (response) {
   
   let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')

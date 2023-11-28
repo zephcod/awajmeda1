@@ -1,48 +1,34 @@
-import { auth } from "@clerk/nextjs"
-import { db } from "@/db"
-import {  userApiLimit } from "@/db/schema"
-import { eq } from "drizzle-orm"
-import { MAX_FREE_COUNTs } from "@/constants"
+import { MAX_FREE_COUNTs } from "@/lib/constants"
+import appwriteServerDBService from "@/db/appwrite_server_db"
 
 export const increaseApiLimit =async () => {
-    const { userId } = auth()
+  
+  const user = await appwriteServerDBService.getServerAwajUser()
+  const userId = user.email
 
     if (!userId){
         return
     }
 
-    const apiLimit = await db.query.userApiLimit.findFirst({
-        where: eq(userApiLimit.clientid, userId),
-      })
+    const apiLimit = user.silverCoin
 
       if (apiLimit){
-        await db
-        .update(userApiLimit)
-        .set({
-          count: Number(apiLimit.count+1),
-        })
-        .where(eq(userApiLimit.clientid, userId))
       }
       else{
-        await db.insert(userApiLimit).values({
-            count: 1,
-            clientid: userId
-          })
+        
       }
 }
-
 export const checkApiLimit = async () => {
-    const {userId} = auth()
+  const user = await appwriteServerDBService.getServerAwajUser()
+  const userId = user.email
 
     if (!userId) {
         return false
     }
     
-    const apiLimit = await db.query.userApiLimit.findFirst({
-        where: eq(userApiLimit.clientid, userId),
-      })
-    
-    if (!apiLimit || apiLimit.count < MAX_FREE_COUNTs){
+    const apiLimit = user.silverCoin
+
+    if (!apiLimit || apiLimit < MAX_FREE_COUNTs){
         return true
     }
     else{
@@ -51,20 +37,19 @@ export const checkApiLimit = async () => {
 }
 
 export const getApiLimit =async () => {
-    const {userId} = auth()
+  const user = await appwriteServerDBService.getServerAwajUser()
+  const userId = user.email
     
     if (!userId) {
         return 0
     }
 
-    const apiLimit = await db.query.userApiLimit.findFirst({
-        where: eq(userApiLimit.clientid, userId),
-      })
+    const apiLimit = user.silverCoin
 
     if (!apiLimit){
         return -8888
     }
 
-    return apiLimit.count
+    return apiLimit
 
 }

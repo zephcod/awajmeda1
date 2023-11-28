@@ -6,6 +6,8 @@ export const userSchema = z.object ({
     phone: z.string().optional(),
     bio: z.string().optional(),
     profilePic: z.string().optional(),
+    silverCoin: z.number().optional(),
+    goldCoin: z.number().optional(),
     newsletter: z.boolean().default(false),
     createdat: z.date().optional(),
 

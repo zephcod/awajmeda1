@@ -10,7 +10,11 @@ import { ThemeToggle } from './theme_toggle';
 import { Badge } from '../ui/badge';
 import { useProModal } from '@/hooks/use-pro-modal';
 
-export function GlobalNav() {
+interface NavProps {
+  apiLimitCount:number
+}
+
+export function GlobalNav({apiLimitCount}:NavProps) {
   const melaModal = useProModal()
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
@@ -23,17 +27,16 @@ export function GlobalNav() {
               className="flex w-full items-center gap-x-2.5"
               // onClick={close}
               >
-              <Icons.awajlogocircle />
-              <h3 className="font-semibold text-base tracking-wide text-secondary">
+              <Icons.awajlogocircle/>
+              <h3 className="font-semibold text-sm tracking-wide text-secondary">
                   Awaj Meda
               </h3>
           </div>
           <div className='w-full flex flex-row justify-end text-sm'>
-            <Badge onClick={melaModal.onOpen} variant='outline' className='hover:cursor-pointer'>
+            <Badge onClick={melaModal.onOpen} variant='secondary' className='hover:cursor-pointer ring-1 ring-border'>
               <p>Coins:</p>
               <Icons.circle fill='gray' height={10}/>
-              {/* <p className='text-base'>{apiLimitCount}</p> */}
-              <p>{50}</p>
+              <p>{apiLimitCount}</p>
               <Icons.circle fill='yellow' height={10}/>
               <p>0</p>
             </Badge>
@@ -81,7 +84,7 @@ export function GlobalNav() {
       </div>
       </div>
     <div className='z-40 hidden md:flex p-4 text-muted-foreground items-center text-sm flex-row gap-4'>
-      <Link href={'https://www.awajai.com/'}>
+      <Link href={'https://www.awajai.com/'} target='_blank'>
         <div className='flex flex-row gap-1 items-center'>
           Home
           <Icons.arrowUpRight className='h-4 w-4'/>
