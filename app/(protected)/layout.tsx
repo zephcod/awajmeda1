@@ -35,23 +35,23 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     //     )
     //   }
 
-    // useEffect(() => {
-    //     if (!nigga) {
-    //         if (!nigga) {
-    //           router.push('/tos');
-    //         }
-    //       }
-    //   }, [nigga])
-
-    if (!nigga) {
-        useEffect(() => {
+    useEffect(() => {
+        if (!nigga) {
             if (!nigga) {
-                if (!nigga) {
-                  router.push('/tos');
-                }
-              }
-          }, [nigga])
-    }
+              router.push('/tos');
+            }
+          }
+      }, [nigga])
+
+    // if (!nigga) {
+    //     useEffect(() => {
+    //         if (!nigga) {
+    //             if (!nigga) {
+    //               router.push('/tos');
+    //             }
+    //           }
+    //       }, [nigga])
+    // }
     if (nigga) {
         return children
     }
