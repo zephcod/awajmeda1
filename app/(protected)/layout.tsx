@@ -33,13 +33,16 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     //       </div>
     //     )
     //   }
+    if (!nigga) {
+        router.replace('/tos')
+    }
     if (nigga) {
         return children
     }
-    router.push('/tos')
-    return(
-    <div>Nada</div>
-        )
+    // router.push('/tos')
+    // return(
+    // <div>Nada</div>
+    //     )
 }
 
 export default Layout
