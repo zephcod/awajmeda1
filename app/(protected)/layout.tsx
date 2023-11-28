@@ -20,6 +20,7 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     //     getUser();
     //   }, [])
 
+
     //   if (loadingUser){
     //     return (
     //       <div className="bg-gray-800 p-8 max-w-sm mx-auto rounded-lg shadow-md mt-10">
@@ -33,8 +34,23 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     //       </div>
     //     )
     //   }
+
+    // useEffect(() => {
+    //     if (!nigga) {
+    //         if (!nigga) {
+    //           router.push('/tos');
+    //         }
+    //       }
+    //   }, [nigga])
+
     if (!nigga) {
-        router.replace('/tos')
+        useEffect(() => {
+            if (!nigga) {
+                if (!nigga) {
+                  router.push('/tos');
+                }
+              }
+          }, [nigga])
     }
     if (nigga) {
         return children
