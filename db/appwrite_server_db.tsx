@@ -5,7 +5,7 @@ import sdk from 'node-appwrite';
 const client = new sdk.Client();
 
 const database = new sdk.Databases(client);
-const account = new sdk.Account(client);
+const users = new sdk.Users(client);
 
 client
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
@@ -48,8 +48,8 @@ export class AppwriteServerDBService {
       //get information about current user
       async currentUser (){
         try {
-          const user = await account.get()
-          return user
+          // const user = await users.get('6519e191793cfad9a7d6')
+          // return user
         } catch (error) {
           console.log("Error getting user:"+error)
         }

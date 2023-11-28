@@ -9,6 +9,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { ThemeToggle } from './theme_toggle';
 import { Badge } from '../ui/badge';
 import { useProModal } from '@/hooks/use-pro-modal';
+import UserMenu from './user_menu';
+import useAuth from '@/hooks/use_auth';
+import { buttonVariants } from '../ui/button';
 
 interface NavProps {
   apiLimitCount:number
@@ -18,20 +21,27 @@ export function GlobalNav({apiLimitCount}:NavProps) {
   const melaModal = useProModal()
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
+  const {authStatus} = useAuth();
 
   return (
-    <div className="fixed top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
+    <div className="fixed top-0 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-10 lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
       <div>
-        <div className="flex h-14 items-center pl-4 pr-16 md:pr-4 py-4 lg:h-auto">
-          <div
-              className="flex w-full items-center gap-x-2.5"
-              // onClick={close}
-              >
-              <Icons.awajlogocircle/>
-              <h3 className="font-semibold text-sm tracking-wide text-secondary">
-                  Awaj Meda
-              </h3>
-          </div>
+        <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 py-4 lg:h-auto">
+          {authStatus ? 
+            (<UserMenu/>)
+             : (
+              <Link href="/signin">
+                <div
+                  className={buttonVariants({
+                    variant:'outline',
+                    size: "sm",
+                  })}
+                >
+                  Start
+                  <span className="sr-only">Get started</span>
+                </div>
+              </Link>
+            )}
           <div className='w-full flex flex-row justify-end text-sm'>
             <Badge onClick={melaModal.onOpen} variant='secondary' className='hover:cursor-pointer ring-1 ring-border'>
               <p>Coins:</p>
@@ -83,17 +93,23 @@ export function GlobalNav({apiLimitCount}:NavProps) {
         </nav>
       </div>
       </div>
-    <div className='z-40 hidden md:flex p-4 text-muted-foreground items-center text-sm flex-row gap-4'>
-      <Link href={'https://www.awajai.com/'} target='_blank'>
-        <div className='flex flex-row gap-1 items-center'>
+    <div className='z-40 hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2'>
+      <Link href={'https://awajai.com/'} target='_blank'>
+        <div className='flex flex-row items-center'>
           Home
-          <Icons.arrowUpRight className='h-4 w-4'/>
+          <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
         </div>
       </Link>
         <p>|</p>
-      <Link href={'#'}>Terms</Link>
+      <Link href={'https://app.awajai.com/'}>
+        <div className='flex flex-row items-center'>
+          Dashboard
+          <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
+        </div>
+      </Link>
         <p>|</p>
-      <Link href={'#'}>Settings</Link>
+      <Link href={'/tos'}>ToS</Link>
+        <p>|</p>
       <ThemeToggle/>
     </div>
     </div>

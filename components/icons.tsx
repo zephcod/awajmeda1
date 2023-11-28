@@ -61,6 +61,7 @@ import {
     type LucideIcon,
     type LucideProps,
     ArrowUpRight,
+    ExternalLink,
   } from "lucide-react"
   import {AwajLogoMono} from '@/components/ui/svgawaj'
   export type Icon = LucideIcon
@@ -82,6 +83,7 @@ import {
     arrowUp: ArrowUp,
     arrowDown: ArrowDown,
     arrowUpRight: ArrowUpRight,
+    arrowExternalLink: ExternalLink,
     menu: Menu,
     verticalThreeDots: MoreVertical,
     horizontalThreeDots: MoreHorizontal,

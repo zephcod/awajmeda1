@@ -1,10 +1,11 @@
-import { getApiLimit } from "@/lib/api-limit";
+// import { getApiLimit } from "@/lib/api-limit";
 import { GlobalNav } from "../layouts/sidenav";
 import { MAX_FREE_COUNTs } from "@/lib/constants";
 
 async function Nav() {
     let lim = 0
-    const limitCount = await getApiLimit()
+    // const limitCount = await getApiLimit()
+    const limitCount = 10+2
     
     if (!limitCount) {
         lim = 0
