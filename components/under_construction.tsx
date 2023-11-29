@@ -11,7 +11,7 @@ interface UCProps {
   }
 const UnderConstruction = ({title, date}:UCProps) => {
     return (
-        <div className='flex text-muted-foreground text-center justify-center items-center flex-col w-full mx-auto sm:px-16 px-6;'>
+        <div className='flex text-muted-foreground text-center justify-center items-center flex-col w-full mx-auto lg:px-16 p-6'>
           <h1 className='py-6 text-3xl font-bold leading-[1.15] lg:text-4xl'>
           {title}
           </h1>
@@ -33,7 +33,7 @@ const UnderConstruction = ({title, date}:UCProps) => {
             />
             <div className='my-8 relative'>
                 <h2 className='text-lg font-bold leading-[1.15] lg:text-2xl pt-6 pb-4'> Need further assistance?</h2>
-                <Link href={'/help_center'}>
+                <Link href={'https://awajai.com/help_center'} target='_blank'>
                     <div
                     className={buttonVariants({
                         variant:'outline',

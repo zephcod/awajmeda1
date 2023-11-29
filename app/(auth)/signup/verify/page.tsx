@@ -57,8 +57,8 @@ async function verifyPhone() {
   }
 
   return (
-    <Shell className="max-w-lg h-screen relative my-auto p-6 pt-20 md:pt-0">
-      <Card>
+    <Shell className="w-full relative my-48 p-6 ">
+      <Card className='m-auto max-w-lg shadow-none bg-accent'>
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Verify Account</CardTitle>
           <CardDescription>

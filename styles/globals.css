@@ -27,7 +27,7 @@
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
   
-    --accent: 194, 25%, 90%, 0.8;
+    --accent: 194, 25%, 90%, 0.9;
     --accent-foreground: ;
   
     --destructive: 0 84.2% 60.2%;
@@ -135,6 +135,41 @@ body {
   color: var(--foreground);
   font-display: swap;
 }
+
+
+.light {
+  width:100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  background-color: #ecf4f5;
+  color:#101111;
+ --primaryColor: #10111;
+ --shadow: rgba(0, 0, 0, 0.03);
+ --glow: rgba(255, 255, 255, 0.3);
+ --transparent: rgba(223, 233, 236, 0.7);
+ --transparent-glass: rgba(223, 233, 236, 0.05);
+ --backdrop: hsla(194, 25%, 90%, 0.8);
+ --border1: rgb(193, 201, 201);
+ --card1: rgb(244, 251, 255);
+ --dropdown: rgb(228, 238, 245,.98);
+ --accent1: #948f7a;
+ --accent2: #e7c633;
+ 
+ --btn-bg: linear-gradient(145deg, #d0dee0, #eef9fa);
+ --btn-bg2: linear-gradient(145deg, #262626, #606060);
+ --btn-bg-color: linear-gradient(145deg, #fabd4b, #fde0a1);
+ --btn-bg-color2: linear-gradient(145deg, #fde0a1, #fabd4b);
+ --btn-glow: rgb(255, 255, 255);
+ --btn-shadow: rgb(162, 173, 177);
+ --btn-glow2: rgb(255, 255, 255);
+ --btn-shadow2: rgb(181, 192, 196);
+ --btn-border: rgb(161, 167, 168);
+ --btn-border2: rgb(179, 187, 189);
+}
+
 ::-webkit-scrollbar {
   display: contents;
   width: 10px;

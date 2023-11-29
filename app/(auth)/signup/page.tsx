@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 
 export default async function SignUpPage() {
   return (
-    <Shell className="max-w-lg h-screen relative my-auto p-6 pt-20 md:pt-0">
-      <Card>
+    <Shell className="w-full relative my-48 p-6">
+      <Card className='m-auto max-w-lg shadow-none bg-accent'>
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Register</CardTitle>
           <CardDescription>
@@ -36,7 +36,7 @@ export default async function SignUpPage() {
               <span className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground ">
+              <span className="bg-accent px-2 text-muted-foreground ">
                 Or continue with
               </span>
             </div>

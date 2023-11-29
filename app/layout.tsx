@@ -40,7 +40,7 @@ export default function RootLayout({
                     </h3>
                   </div>
                   <p className='ring-1 ring-border px-4 py-1 text-sm text-muted-foreground rounded-sm'>
-                    Learn more about Generative AI ...
+                  ለማጅ ነን | This is beta mode ...
                   </p>
                 </div>
               </div>
@@ -50,7 +50,7 @@ export default function RootLayout({
             </Suspense>
                 <div className="fixed bottom-2 lg:bottom-8 left-2 lg:left-80 top-16 lg:top-24 right-2 lg:right-8">
                   <div className="bg-card h-full rounded-lg shadow-md ring-1 ring-border ring-inset overflow-auto">
-                    <div className="p-3.5 lg:p-6 ">{children}</div>
+                    {children}
                   </div>
                 </div>
           </div>

@@ -24,12 +24,14 @@ export function GlobalNav({apiLimitCount}:NavProps) {
   const {authStatus} = useAuth();
 
   return (
-    <div className="fixed top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
+    <div className="fixed h-fit lg:h-screen top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
       <div>
-        <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 py-4 lg:h-auto">
+        <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 py-4 lg:h-auto justify-between">
           {authStatus ? 
             (<UserMenu/>)
              : (
+              <>
+              <div className='flex md:hidden'><ThemeToggle/></div>
               <Link href="/signin">
                 <div
                   className={buttonVariants({
@@ -37,12 +39,13 @@ export function GlobalNav({apiLimitCount}:NavProps) {
                     size: "sm",
                   })}
                 >
-                  {JSON.stringify(authStatus)}
+                  Get started
                   <span className="sr-only">Get started</span>
                 </div>
               </Link>
+              </>
             )}
-          <div className='w-full flex flex-row justify-end text-sm'>
+          <div className='w-fit text-sm '>
             <Badge onClick={melaModal.onOpen} variant='secondary' className='hover:cursor-pointer ring-1 ring-border'>
               <p>Coins:</p>
               <Icons.circle fill='gray' height={10}/>
@@ -52,48 +55,48 @@ export function GlobalNav({apiLimitCount}:NavProps) {
             </Badge>
           </div>
         </div>
-      <button
-        type="button"
-        className="group absolute right-0 top-0 flex h-14 items-center gap-x-2 px-4 lg:hidden"
-        onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? (
-          <Icons.close className="block w-6 text-gray-400" />
-        ) : (
-          <Icons.chevronLeft className="block w-6 text-gray-400" />
-        )}
-      </button>
+        <button
+          type="button"
+          className="group absolute right-0 top-0 flex h-14 items-center gap-x-2 px-4 lg:hidden"
+          onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? (
+            <Icons.close className="block w-6 text-gray-400" />
+          ) : (
+            <Icons.chevronLeft className="block w-6 text-gray-400" />
+          )}
+        </button>
 
-      <div
-        className={clsx('overflow-y-auto lg:static lg:block', {
-          'fixed inset-x-0 bottom-0 top-14 mt-px bg-card': isOpen,
-          hidden: !isOpen,
-        })}
-      >
-        <nav className="space-y-6 px-4 pb-24 pt-5 h-[800px] overflow-y-auto">
-        {demos.map((section) => {
-            return (
-              <div key={section.name}>
-                  <Accordion key={section.name} type="single" collapsible className="w-full ">
-                    <AccordionItem value='Question 1'>
-                        <AccordionTrigger className="text-sm capitalize">
-                            {section.name}
-                        </AccordionTrigger>
-                        <AccordionContent>
-                            <div className="flex flex-col space-y-1">
-                              {section.items.map((item) => (
-                              <GlobalNavItem key={item.slug} item={item} close={close} />
-                              ))}
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                    </Accordion>
-              </div>
-            );
-        })}
-        </nav>
+        <div
+          className={clsx('overflow-y-auto lg:static lg:block', {
+            'fixed inset-x-0 bottom-0 top-14 mt-px bg-card': isOpen,
+            hidden: !isOpen,
+          })}
+        >
+          <nav className="space-y-6 px-4 pb-24 pt-5 h-[400px] lg:h-[500px] xl:h-[650px] 2xl:h-[800px] overflow-y-auto">
+          {demos.map((section) => {
+              return (
+                <div key={section.name}>
+                    <Accordion key={section.name} type="single" collapsible className="w-full ">
+                      <AccordionItem value='Question 1'>
+                          <AccordionTrigger className="text-sm capitalize">
+                              {section.name}
+                          </AccordionTrigger>
+                          <AccordionContent>
+                              <div className="flex flex-col space-y-1">
+                                {section.items.map((item) => (
+                                <GlobalNavItem key={item.slug} item={item} close={close} />
+                                ))}
+                              </div>
+                          </AccordionContent>
+                      </AccordionItem>
+                      </Accordion>
+                </div>
+              );
+          })}
+          </nav>
+        </div>
       </div>
-      </div>
-      <div className='hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2'>
+      <div className='hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2 justify-evenly'>
         <Link href={'https://awajai.com/'} target='_blank'>
           <div className='flex flex-row items-center'>
             Home
@@ -101,10 +104,10 @@ export function GlobalNav({apiLimitCount}:NavProps) {
           </div>
         </Link>
           <p>|</p>
-        <Link href={'https://app.awajai.com/'}>
+        <Link href={'/guide'}>
           <div className='flex flex-row items-center'>
-            Dashboard
-            <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
+            Guide
+            {/* <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/> */}
           </div>
         </Link>
           <p>|</p>

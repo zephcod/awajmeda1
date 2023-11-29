@@ -21,8 +21,8 @@ export default function ResetPasswordStep2Page() {
 
 
   return (
-    <Shell className="max-w-lg h-screen relative my-auto p-4">
-      <Card>
+    <Shell className="w-full relative my-48 p-6 ">
+      <Card className='m-auto max-w-lg shadow-none bg-accent'>
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Verify Phone</CardTitle>
           <CardDescription>

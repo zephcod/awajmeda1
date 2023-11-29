@@ -58,7 +58,7 @@ export default function GenerateButton  () {
     )
   }
   return (
-    <div className='flex flex-col md:flex-row items-start gap-5 m-auto'>
+    <div className='flex flex-col md:flex-row items-start gap-5 w-full mx-auto lg:p-8 p-3.5'>
       <Form {...form}>
         <form
           className="grid gap-5 items-start w-full h-fit"

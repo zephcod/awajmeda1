@@ -29,8 +29,8 @@ const LogOut = () => {
   }
 
   return (
-    <Shell className="max-w-lg my-auto relative h-screen p-6 md:pt-0">
-      <Card>
+    <Shell className="w-full relative my-48 p-6 ">
+      <Card className='m-auto max-w-lg shadow-none bg-accent'>
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Logging Out?</CardTitle>
         </CardHeader>
@@ -50,7 +50,7 @@ const LogOut = () => {
               <span className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground ">
+              <span className=" bg-accent z-20 px-2 text-muted-foreground ">
               awaj ai
               </span>
             </div>

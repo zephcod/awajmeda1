@@ -30,7 +30,7 @@ const LogOut = () => {
 
   return (
     <Shell className="max-w-lg my-auto relative h-screen p-6 md:pt-0">
-      <Card>
+      <Card className='mx-auto w-full'>
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Logging Out?</CardTitle>
         </CardHeader>

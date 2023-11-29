@@ -54,7 +54,7 @@ export default function PreConfImg  () {
     )
   }
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 w-full mx-auto lg:p-8 p-3.5'>
       <Form {...form}>
         <form
           className="grid w-full max-w-2xl gap-5"

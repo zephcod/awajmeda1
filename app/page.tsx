@@ -1,13 +1,14 @@
+import MiniGallery from '@/components/gallery/popular_orders'
 import { Icons } from '@/components/icons'
 import React from 'react'
 
 const Home = () => {
   return (
-    <div className='relative'>
-        <Icons.spinner
-              className="h-24 w-24 animate-spin m-auto my-72 text-muted-foreground"
-              aria-hidden="true"
-            />
+    <div className='relative w-full m-auto'>
+      <div className=''>
+        <Icons.add className=" m-auto h-24 w-24 text-muted-foreground"/>
+        <MiniGallery/>
+      </div>
     </div>
   )
 }
