@@ -1,7 +1,7 @@
 import { Icons } from '@/components/icons'
 import React from 'react'
 
-const Home = () => {
+const Loading = () => {
   return (
     <div className='relative'>
         <Icons.spinner
@@ -12,4 +12,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Loading

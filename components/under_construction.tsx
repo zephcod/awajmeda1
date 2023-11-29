@@ -24,7 +24,7 @@ const UnderConstruction = ({title, date}:UCProps) => {
             We apologize for any inconvenience this may cause. If you need anything, we are always available to chat.
           </p>
             <Image
-              className='z-20'
+              className=''
               sizes={'lg'}
               alt={'page under construction'}
               width={640}

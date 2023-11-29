@@ -24,7 +24,7 @@ export function GlobalNav({apiLimitCount}:NavProps) {
   const {authStatus} = useAuth();
 
   return (
-    <div className="fixed top-0 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-10 lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
+    <div className="fixed top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
       <div>
         <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 py-4 lg:h-auto">
           {authStatus ? 
@@ -37,7 +37,7 @@ export function GlobalNav({apiLimitCount}:NavProps) {
                     size: "sm",
                   })}
                 >
-                  Start
+                  {JSON.stringify(authStatus)}
                   <span className="sr-only">Get started</span>
                 </div>
               </Link>
@@ -69,7 +69,7 @@ export function GlobalNav({apiLimitCount}:NavProps) {
           hidden: !isOpen,
         })}
       >
-        <nav className="space-y-6 px-4 pb-24 pt-5">
+        <nav className="space-y-6 px-4 pb-24 pt-5 h-[800px] overflow-y-auto">
         {demos.map((section) => {
             return (
               <div key={section.name}>
@@ -93,25 +93,25 @@ export function GlobalNav({apiLimitCount}:NavProps) {
         </nav>
       </div>
       </div>
-    <div className='z-40 hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2'>
-      <Link href={'https://awajai.com/'} target='_blank'>
-        <div className='flex flex-row items-center'>
-          Home
-          <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
-        </div>
-      </Link>
-        <p>|</p>
-      <Link href={'https://app.awajai.com/'}>
-        <div className='flex flex-row items-center'>
-          Dashboard
-          <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
-        </div>
-      </Link>
-        <p>|</p>
-      <Link href={'/tos'}>ToS</Link>
-        <p>|</p>
-      <ThemeToggle/>
-    </div>
+      <div className='hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2'>
+        <Link href={'https://awajai.com/'} target='_blank'>
+          <div className='flex flex-row items-center'>
+            Home
+            <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
+          </div>
+        </Link>
+          <p>|</p>
+        <Link href={'https://app.awajai.com/'}>
+          <div className='flex flex-row items-center'>
+            Dashboard
+            <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
+          </div>
+        </Link>
+          <p>|</p>
+        <Link href={'/tos'}>ToS</Link>
+          <p>|</p>
+        <ThemeToggle/>
+      </div>
     </div>
   );
 }
@@ -131,10 +131,10 @@ function GlobalNavItem({
       onClick={close}
       href={`/${item.slug}`}
       className={clsx(
-        'block rounded-md px-3 py-2 text-sm font-medium hover:text-gray-300',
+        'block rounded-md px-3 py-2 text-sm font-medium hover:text-secondary',
         {
-          'text-gray-400 hover:bg-gray-800': !isActive,
-          'text-white': isActive,
+          'text-gray-400': !isActive,
+          'text-primary': isActive,
         },
       )}
     >

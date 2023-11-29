@@ -1,4 +1,4 @@
-'use server'
+import { Chapa } from 'chapa-nodejs';
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers"
 import appwriteServerDBService from '@/db/appwrite_server_db'
@@ -6,22 +6,33 @@ import appwriteServerDBService from '@/db/appwrite_server_db'
 import { awajChapa } from "@/lib/chapa";
 import { absoluteUrl } from "@/lib/utils";
 
-const billingsUrl = absoluteUrl("/");
-const verifyUrl = absoluteUrl("/chapa-v");
-
+// const billingsUrl = absoluteUrl("/");
+const billingsUrl = "https://app.awajai.com/";
+const verifyUrl = "https://app.awajai.com/";
+const chapa = new Chapa({
+  secretKey: "CHASECK_TEST-BHcbAIPojwydRGTqJTwUfbgqL8pRCCrm",
+});
 
 export async function GET(request: NextRequest) {
     const {searchParams} = new URL(request.url)
-    const amount = searchParams.get('amount')
+    const amount = searchParams.get('amount') || '0'
     const prod = searchParams.get('prod')
     
-  
+    const tx_ref = await chapa.generateTransactionReference(); // result: TX-JHBUVLM7HYMSWDA
+
+    // Or with options
+    
+    // const tx_ref = await chapa.generateTransactionReference({
+    //   prefix: 'TX', // defaults to `TX`
+    //   size: 20, // defaults to `15`
+    // }); 
 
     try {
         'use server'
         console.log('we here')
         const user = await appwriteServerDBService.getServerAwajUser()
         
+       
         if (!user ) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
@@ -29,11 +40,11 @@ export async function GET(request: NextRequest) {
         const customerInfo =  {
             amount: amount,
             currency: 'ETB',
-            email: user!.email,
+            email: `${user!.email}`,
             first_name: `user${user!.name}`,
-            last_name: prod,
-            // tx_ref: 'tx-x12345', // if autoRef is set in the options we dont't need to provide reference, instead it will generate it for us
-            // callback_url: verifyUrl, // your callback URL
+            last_name: `i-${prod}`,
+            tx_ref: tx_ref,
+            callback_url: verifyUrl, // your callback URL
             return_url: billingsUrl,
             meta: {
                 product:"silver mela"
@@ -43,11 +54,13 @@ export async function GET(request: NextRequest) {
                 description: 'from ace digital plc'
                 }
         }
+        console.log(JSON.stringify(customerInfo))
         
-        let chapaSession = await awajChapa.initialize(customerInfo, { autoRef: true })
+        let chapaSession = await chapa.initialize(customerInfo, )
         console.log(JSON.stringify(chapaSession))
-        const cookieStore = cookies()
-        cookieStore.set("refId", String(chapaSession.tx_ref))
+
+        // const cookieStore = cookies()
+        // cookieStore.set("refId", String(chapaSession.tx_ref))
 
         return new NextResponse(JSON.stringify({ url: chapaSession.data.checkout_url }))
 

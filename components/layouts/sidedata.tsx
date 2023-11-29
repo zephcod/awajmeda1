@@ -2,7 +2,7 @@
 import { GlobalNav } from "../layouts/sidenav";
 import { MAX_FREE_COUNTs } from "@/lib/constants";
 
-async function Nav() {
+function Nav() {
     let lim = 0
     // const limitCount = await getApiLimit()
     const limitCount = 10+2
