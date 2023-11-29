@@ -2,13 +2,12 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { SignOutButton } from "@clerk/nextjs"
 
-import { cn } from "@/app/utils/utils"
+import { cn } from "@/lib/utils"
 import { useMounted } from "@/hooks/use_mounted"
-import { Button, buttonVariants } from "@/components/UI/button"
-import { Skeleton } from "@/components/UI/skeleton"
-import { Icons } from "@/components/UI/icons"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Icons } from "@/components/icons"
 
 export function LogOutDropmenu() {
   const router = useRouter()
@@ -17,7 +16,7 @@ export function LogOutDropmenu() {
 
   return (
     <div className="flex w-full items-center space-x-2">
-      {mounted ? (
+      {/* {mounted ? (
         <SignOutButton
           signOutCallback={() =>
             startTransition(() => {
@@ -47,7 +46,7 @@ export function LogOutDropmenu() {
         >
           Log out
         </Skeleton>
-      )}
+      )} */}
     </div>
   )
 }
