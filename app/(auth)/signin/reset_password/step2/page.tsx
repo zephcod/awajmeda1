@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/UI/card"
+} from "@/components/ui/card"
 import { ResetPasswordStep2Form } from "@/components/forms/reset_password_form_step2"
 import { Shell } from "@/components/shells/shell"
 

@@ -13,12 +13,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/UI/card"
+} from "@/components/ui/card"
 import { Shell } from "@/components/shells/shell"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/UI/form"
-import { Input } from "@/components/UI/input"
-import { Button } from "@/components/UI/button"
-import { Icons } from "@/components/UI/icons"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 import { checkEmailSchema } from "@/lib/validations/auth"
 
 type Inputs = z.infer<typeof checkEmailSchema>

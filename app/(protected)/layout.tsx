@@ -8,17 +8,17 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     const user = useAuth().authStatus
 
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         if (!user) {
-    //           router.push('/tos');
-    //         }
-    //       }
-    //   }, [user])
+    useEffect(() => {
+        if (!user) {
+            if (!user) {
+              router.push('/tos');
+            }
+          }
+      }, [user])
 
-    // if (user) {
+    if (user) {
         return children
-    // }
+    }
 }
 
 export default Layout
