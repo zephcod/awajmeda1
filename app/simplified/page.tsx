@@ -80,7 +80,7 @@ const Simplified = () => {
 export default Simplified
 
 
-export const InfoDropdown = () => {
+const InfoDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
