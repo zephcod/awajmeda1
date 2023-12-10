@@ -20,7 +20,7 @@ import useAuth from "@/hooks/use_auth"
 import { AwajUser } from "@/lib/validations/user"
 import appwriteAuthService from "@/db/appwrite_auth"
 
-const UserMenu = () => {
+const HelpMenu = () => {
   const {authStatus} = useAuth();
   const [user, setUser] = useState<AwajUser|null>(null)
   
@@ -31,86 +31,80 @@ const UserMenu = () => {
     })()
   },[])
 
-if (!authStatus) {
-  return null;
-}
   return (
     <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="secondary"
-                    className="relative h-8 w-8 rounded-full"
+                    className="relative h-8 w-8 "
                   >
-                    <Avatar className="h-8 w-8">
-                      {user?.profilePic?
-                      <AvatarImage
-                        src={user.profilePic}
-                        alt={user.name}
-                      />:<></>}
-                      <AvatarFallback><Icons.user2/></AvatarFallback>
+                    <Avatar className="h-8 w-8 text-muted-foreground">
+                      <AvatarFallback className="bg-card"><Icons.help/></AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
+                    {authStatus?
+                      <div className="flex flex-col space-y-1">
                       <p className="text-sm leading-none text-muted-foreground">
                         {user?.email?<span>{user.email}</span>:<></>}
                       </p>
-                    </div>
+                      </div>
+                    :
+                    ''}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/gallery">
-                        <Icons.image
+                      <Link href="/dashboard/support">
+                        <Icons.product
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Gallery
+                        Guide & Resources 
+                        <DropdownMenuShortcut></DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard/gallery">
+                        <Icons.addCircle
+                          className="mr-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                        Help & FAQ
                         <DropdownMenuShortcut></DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/dashboard/account">
-                        <Icons.user2
+                        <Icons.arrowExternalLink
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Account
+                        Terms of service
                         <DropdownMenuShortcut></DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/dashboard/billing">
-                        <Icons.addCircle
+                        <Icons.arrowExternalLink
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Coins
-                        <DropdownMenuShortcut></DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/dashboard/support">
-                        <Icons.help
-                          className="mr-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                        Support
+                        Privacy policy
                         <DropdownMenuShortcut></DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                   <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href="https://www.awajai.com/" target="_blank">
-                        <Icons.presentation
+                        <Icons.arrowExternalLink
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
                         <div className='flex flex-row gap-1 items-center py-1'>
                           Awaj Home 
-                          <Icons.arrowExternalLink className='h-4 w-4'/>
                         </div>
                         <DropdownMenuShortcut></DropdownMenuShortcut>
                       </Link>
@@ -132,4 +126,4 @@ if (!authStatus) {
   )
 }
 
-export default UserMenu
+export default HelpMenu

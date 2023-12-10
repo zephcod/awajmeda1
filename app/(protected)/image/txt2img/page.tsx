@@ -43,9 +43,9 @@ export default function GenerateButton  () {
   function onSubmit(data: Inputs){
     startTransition(async()=>{
       try {
-        const f = await getTextImage(data.prompt)
+        const f = await getTextImage(data)
           setImgsrc(f)
-          form.reset()
+          // form.reset()
       } catch (error:any) {
         if(error?.response?.status === 403){
           melaModal.onOpen()

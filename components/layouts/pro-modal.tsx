@@ -29,32 +29,13 @@ export const ProModal = () => {
             </div>
           </DialogTitle>
           <DialogDescription className="text-center pt-2 space-y-2 font-medium">
-            <Tabs defaultValue="silver" className="w-full m-auto ">
-              <TabsList className="grid w-full grid-cols-2 bg-card">
-                <TabsTrigger className="hover:text-primary active:text-primary" value="silver">Silver</TabsTrigger>
-                <TabsTrigger className="hover:text-primary" value="gold">Gold</TabsTrigger>
-              </TabsList>
-              <TabsContent value="silver">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Silver Mela</CardTitle>
                   </CardHeader>
                   <CardContent className="w-full m-auto">
                     <MelaCard />
                   </CardContent>
                 </Card>
-              </TabsContent>
-              <TabsContent value="gold">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Gold Mela</CardTitle>
-                  </CardHeader>
-                  <CardContent className="w-full m-auto">
-                    <GoldMelaCard/>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

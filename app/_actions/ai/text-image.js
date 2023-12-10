@@ -3,14 +3,15 @@ const axios = require("axios");
 
 
 export const getTextImage = async (data) => {
-console.log(data.prompt)
+// console.log(data.prompt)
+
   const encodedParams = new URLSearchParams();
   encodedParams.append("prompt", data.prompt);
   encodedParams.append("negative_prompt", "ugly, poorly drawn, deformed, deformed limbs");
   encodedParams.append("guidance", "8");
   encodedParams.append("seed", "568542368");
   //Use this to select which model to use:
-  encodedParams.append("model", "dreamshaper_7");
+  encodedParams.append("model", "absolute_reality_1_8_1");
   
   const options = {
     method: 'POST',

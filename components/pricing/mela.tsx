@@ -13,9 +13,9 @@ import { Input } from '../ui/input'
 
 const MelaCard = () => {
     const [loading, setLoading] = React.useState(false);
-    const [silverMela, setSilverMela] = React.useState<[number]>([20])
+    const [silverMela, setSilverMela] = React.useState<[number]>([2000])
     const silverMelaFormat = Number(silverMela)
-    const silverMelaPrice = (silverMelaFormat*5)
+    const silverMelaPrice = (silverMelaFormat*.1)
     const proModal = useProModal();
     proModal.isOpen = true;
 
@@ -51,10 +51,10 @@ const MelaCard = () => {
                   aria-label="Enterprise package slider"
                   thickness="thin"
                   name="456"
-                  defaultValue={[20]}
-                  min={10}
-                  max={400}
-                  step={10}
+                  defaultValue={[2000]}
+                  min={1000}
+                  max={10000}
+                  step={100}
                   value={silverMela}
                   onValueChange={(
                     value: typeof silverMela
@@ -69,9 +69,9 @@ const MelaCard = () => {
                     inputMode="numeric"
                     defaultValue={silverMela[0]}
                     value={silverMela[0]}
-                    min={10}
-                    step={10}
-                    max={400}
+                    min={1000}
+                    step={100}
+                    max={10000}
                     onChange={(e) => {
                       const value = Number(e.target.value)
                       setSilverMela([value])
@@ -82,19 +82,19 @@ const MelaCard = () => {
         <div className='flex flex-col bg-card rounded-2xl w-full'>
             <div className='block font-light text-sm m-auto p-4'>
                 <div className='p-1 flex flex-row items-center gap-2'>
-                    <Icons.check/><p>Get access to 50+ AI models</p>
+                    <Icons.check/><p>Get access to 150+ AI models.</p>
                 </div>
                 <div className='p-1 flex flex-row items-center gap-2'>
-                    <Icons.check/><p>Free access to prompts lab</p>
+                    <Icons.check/><p>Free access to prompts lab.</p>
                 </div>
                 <div className='p-1 flex flex-row items-center gap-2'>
-                    <Icons.check/><p>Members only gallery access</p>
+                    <Icons.check/><p>Members only gallery access.</p>
                 </div>
                 <div className='p-1 flex flex-row items-center gap-2'>
-                    <Icons.check/><p>4X faster response times</p>
+                    <Icons.check/><p>Super fast response times.</p>
                 </div>
                 <div className='p-1 flex flex-row items-center gap-2'>
-                    <Icons.check/><p>No expiry date</p>
+                    <Icons.check/><p>Private workspace.</p>
                 </div>
             </div>
         </div>

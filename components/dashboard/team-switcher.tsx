@@ -46,13 +46,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { AwajUser } from "@/lib/validations/user"
+import appwriteAuthService from "@/db/appwrite_auth"
+import { Icons } from "../icons"
 
 const groups = [
   {
     label: "Personal Account",
     teams: [
       {
-        label: "Alicia Koch",
+        label: "Admin Account",
         value: "personal",
       },
     ],
@@ -61,12 +64,12 @@ const groups = [
     label: "Teams",
     teams: [
       {
-        label: "Acme Inc.",
-        value: "acme-inc",
+        label: "Awaj AI",
+        value: "awajai",
       },
       {
-        label: "Monsters Inc.",
-        value: "monsters",
+        label: "Awaj Advert",
+        value: "awajad",
       },
     ],
   },
@@ -85,6 +88,15 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
     groups[0].teams[0]
   )
 
+  const [user, setUser] = React.useState<AwajUser|null>(null)
+  
+  React.useEffect(()=>{
+    (async () => {
+      const iuser = await appwriteAuthService.currentUser()
+      setUser(iuser)
+    })()
+  },[])
+
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
       <Popover open={open} onOpenChange={setOpen}>
@@ -96,12 +108,13 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             aria-label="Select a team"
             className={cn("w-[200px] justify-between", className)}
           >
-            <Avatar className="mr-2 h-5 w-5">
+            <Avatar className="h-8 w-8">
+              {user?.profilePic?
               <AvatarImage
-                src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
-                alt={selectedTeam.label}
-              />
-              <AvatarFallback>SC</AvatarFallback>
+                src={user.profilePic}
+                alt={user.name}
+              />:<></>}
+              <AvatarFallback><Icons.user2/></AvatarFallback>
             </Avatar>
             {selectedTeam.label}
             <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
@@ -185,15 +198,15 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="free">
-                    <span className="font-medium">Free</span> -{" "}
+                    <span className="font-medium">Essential</span> -{" "}
                     <span className="text-muted-foreground">
-                      Trial for two weeks
+                      2000ETB/Month
                     </span>
                   </SelectItem>
                   <SelectItem value="pro">
-                    <span className="font-medium">Pro</span> -{" "}
+                    <span className="font-medium">Bussiness</span> -{" "}
                     <span className="text-muted-foreground">
-                      $9/month per user
+                      5000ETB/Month
                     </span>
                   </SelectItem>
                 </SelectContent>

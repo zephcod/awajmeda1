@@ -3,7 +3,8 @@ import { demos, type Item } from '@/config/admin';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import appwriteAuthService from "@/db/appwrite_auth";
 import { Icons } from '../icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ThemeToggle } from './theme_toggle';
@@ -12,16 +13,41 @@ import { useProModal } from '@/hooks/use-pro-modal';
 import UserMenu from './user_menu';
 import useAuth from '@/hooks/use_auth';
 import { buttonVariants } from '../ui/button';
+import HelpMenu from './help_menu';
 
-interface NavProps {
-  apiLimitCount:number
-}
 
-export function GlobalNav({apiLimitCount}:NavProps) {
+export function GlobalNav() {
   const melaModal = useProModal()
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
   const {authStatus} = useAuth();
+  const [loadingUser, setLoadingUser] = useState(true)
+  const [coin, setCoin] = useState<boolean|null>(null)
+
+
+    function delay(ms:any) {
+      return new Promise((resolve) => {
+         setTimeout(resolve, ms);
+      })
+    }
+
+    
+
+  useEffect(() => {
+    (async ()=> {
+        timeOut()
+        const appuser = await appwriteAuthService.currentUser()
+        const limit = appuser!.emailVerification
+        setCoin(limit)
+        setLoadingUser(false)
+    }) ();
+    
+    function timeOut (){
+      delay(10000)
+      setLoadingUser(false)
+      }
+  }, [])
+
 
   return (
     <div className="fixed h-fit lg:h-screen top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
@@ -29,7 +55,12 @@ export function GlobalNav({apiLimitCount}:NavProps) {
         <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 py-4 lg:h-auto justify-between">
           {authStatus ? 
             (<UserMenu/>)
-             : (
+             : loadingUser?
+             <Icons.spinner
+              className="mr-2 h-6 w-6 animate-spin"
+              aria-hidden="true"
+            />
+             :(
               <>
               <div className='flex md:hidden'><ThemeToggle/></div>
               <Link href="/signin">
@@ -48,10 +79,11 @@ export function GlobalNav({apiLimitCount}:NavProps) {
           <div className='w-fit text-sm '>
             <Badge onClick={melaModal.onOpen} variant='secondary' className='hover:cursor-pointer ring-1 ring-border'>
               <p>Coins:</p>
-              <Icons.circle fill='gray' height={10}/>
-              <p>{apiLimitCount}</p>
               <Icons.circle fill='yellow' height={10}/>
-              <p>0</p>
+              <p>
+                {authStatus?coin:'--'}</p>
+              {/* <Icons.circle fill='yellow' height={10}/>
+              <p>0</p> */}
             </Badge>
           </div>
         </div>
@@ -97,21 +129,7 @@ export function GlobalNav({apiLimitCount}:NavProps) {
         </div>
       </div>
       <div className='hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2 justify-evenly'>
-        <Link href={'https://awajai.com/'} target='_blank'>
-          <div className='flex flex-row items-center'>
-            Home
-            <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/>
-          </div>
-        </Link>
-          <p>|</p>
-        <Link href={'/guide'}>
-          <div className='flex flex-row items-center'>
-            Guide
-            {/* <Icons.arrowExternalLink className='h-4 w-4 pl-[2px]'/> */}
-          </div>
-        </Link>
-          <p>|</p>
-        <Link href={'/tos'}>ToS</Link>
+        <HelpMenu/>
           <p>|</p>
         <ThemeToggle/>
       </div>
@@ -141,7 +159,10 @@ function GlobalNavItem({
         },
       )}
     >
-      {item.name}
+      <div className='flex flex-row gap-2 items-center'>
+        <item.icon/>
+        {item.name}
+      </div>
     </Link>
   );
 }

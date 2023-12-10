@@ -25,6 +25,7 @@ import {
     FileTerminal,
     Filter,
     Footprints,
+    Gauge,
     HardHat,
     Image,
     Loader2,
@@ -62,6 +63,9 @@ import {
     type LucideProps,
     ArrowUpRight,
     ExternalLink,
+    Presentation,
+    HelpCircle,
+    Info,
   } from "lucide-react"
   import {AwajLogoMono} from '@/components/ui/svgawaj'
   export type Icon = LucideIcon
@@ -80,6 +84,8 @@ import {
     chevronUp: ChevronUp,
     chevronDown: ChevronDown,
     chevronUpDown: ChevronsUpDown,
+    presentation:Presentation,
+    gauge: Gauge,
     arrowUp: ArrowUp,
     arrowDown: ArrowDown,
     arrowUpRight: ArrowUpRight,
@@ -97,7 +103,10 @@ import {
     view: Eye,
     hide: EyeOff,
     trash: Trash,
+    help: HelpCircle,
     edit: Edit,
+    image: Image,
+    info: Info,
     crop: Crop,
     reset: RefreshCw,
     send: Send,

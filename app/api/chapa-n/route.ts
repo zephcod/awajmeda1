@@ -7,8 +7,8 @@ import { awajChapa } from "@/lib/chapa";
 import { absoluteUrl } from "@/lib/utils";
 
 // const billingsUrl = absoluteUrl("/");
-const billingsUrl = "https://app.awajai.com/";
-const verifyUrl = "https://app.awajai.com/";
+const billingsUrl = "https://meda.awajai.com/dashboard/coins";
+const verifyUrl = "https://meda.awajai.com/dashboard/coins";
 const chapa = new Chapa({
   secretKey: "CHASECK_TEST-BHcbAIPojwydRGTqJTwUfbgqL8pRCCrm",
 });

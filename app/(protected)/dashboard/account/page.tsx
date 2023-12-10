@@ -76,9 +76,9 @@ const AccountPage = () => {
             <AvatarImage src={user?.profilePic} alt={user?.name}/>
             <AvatarFallback><Icons.user2/></AvatarFallback>
           </Avatar>
-          <p>Name:{' '}{user?.name}</p>
-          <p>Email:{' '}{user?.email}</p>
-          <p>Phone:{' '}{user?.phone}</p>
+          <p>Name:{' '}{appuser?.name}</p>
+          <p>Email:{' '}{appuser?.email}</p>
+          <p>Phone:{' '}{appuser?.phone}</p>
         </div>
       </div>
       <div className="max-w-3xl flex-col flex gap-3 p-4 ring-1 ring-border rounded-md">

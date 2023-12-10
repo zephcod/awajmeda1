@@ -8,7 +8,7 @@ export const userSchema = z.object ({
     profilePic: z.string().optional(),
     silverCoin: z.number().optional(),
     goldCoin: z.number().optional(),
-    newsletter: z.boolean().default(false),
+    // newsletter: z.boolean().default(false),
     createdat: z.date().optional(),
 
 })
