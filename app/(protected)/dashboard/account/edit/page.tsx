@@ -17,7 +17,7 @@ const editAccount = async() => {
       <div className="max-w-3xl flex-col flex gap-3 p-4 ring-1 ring-border rounded-md">
       <p className="text-lg font-semibold text">Personal Info:</p>
         <div className="pl-2 flex flex-col gap-3 text-base text-muted-foreground">
-          <EditUserForm name={user.name} newsletter={false} />
+          <EditUserForm name={user.name} />
         </div>
       </div>
     </Shell>
