@@ -1,4 +1,3 @@
-'use server'
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers"
 
@@ -14,8 +13,13 @@ export async function GET() {
     try {
         const refId = cookies().get("refId")!.value
         const desId = cookies().get ("desId")!.value
+
+        console.log(JSON.stringify(refId))
+        console.log(JSON.stringify(desId))
+        // const refId = 'TX-1HQH53BESGWUSZD'
+        // const desId = '656a28d58f2a2edbf3cf'
         let chapaSession = await chapa.verify({tx_ref:refId})
-        if (chapaSession.status) {
+        if (chapaSession) {
             const refill = Number(chapaSession.data.amount)*10
 
             const user = await appwriteServerDBService.currentUser(desId)
