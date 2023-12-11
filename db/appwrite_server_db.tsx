@@ -48,13 +48,36 @@ export class AppwriteServerDBService {
       //get information about current user
       async currentUser (){
         try {
-          // const user = await users.get('6519e191793cfad9a7d6')
-          // return user
+          const user = await users.get('656a28d58f2a2edbf3cf')
+          return user
         } catch (error) {
           console.log("Error getting user:"+error)
         }
         return null
       }
+
+            // get preferences
+      async getPreferences(){
+        try {
+          const prefs = await users.getPrefs('656a28d58f2a2edbf3cf')
+          console.log(prefs)
+          return prefs
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      // update preferences
+      async updatePreferences(newcoin:number){
+        try {
+          const prefs = await users.updatePrefs('656a28d58f2a2edbf3cf',{coin:newcoin})
+          console.log(prefs)
+          return prefs
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
 }
 
 const appwriteServerDBService = new AppwriteServerDBService

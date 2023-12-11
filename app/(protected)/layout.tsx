@@ -22,11 +22,9 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     useEffect(() => {
       (async ()=> {
         const appuser = await appwriteAuthService.isLoggedIn()
-        if (appuser) {
-          setUser(appuser)
-        }
-    }) ();
+        setUser(appuser)
         setLoadingUser(false)
+    }) ();
       }, [])
 
       if (loadingUser){

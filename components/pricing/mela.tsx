@@ -26,12 +26,12 @@ const MelaCard = () => {
   
         window.location.href = response.data.url;
       } catch (error:any) {
-        if (error.message === 'Request failed with status code 401') {
-          toast.error('You do not have an account please sign up first');
-          window.location.href = '/signup';
-        } else {
-          toast.error(JSON.stringify(error.message));
-        }
+        // if (error.message === 'Request failed with status code 401') {
+        //   toast.error('You do not have an account please sign up first');
+        //   window.location.href = '/signup';
+        // } else {
+        //   toast.error(JSON.stringify(error.message));
+        // }
       } finally {
         proModal.onClose
         setLoading(false);
@@ -39,11 +39,11 @@ const MelaCard = () => {
     }
 
   return (
-    <>
+    <div>
       <div className='bg-accent rounded-2xl ring-2 ring-accent'>
-      <div className='flex flex-col gap-4 p-4 relative'>
+          <div className='flex flex-col gap-4 p-4 relative'>
                 <div className="flex flex-row justify-center gap-2">
-                  <p> Silver Mela </p>
+                  <p> Added Coins </p>
                   <Badge variant='outline'>+{silverMela[0]}</Badge>
                 </div>
                 <Slider
@@ -51,7 +51,7 @@ const MelaCard = () => {
                   aria-label="Enterprise package slider"
                   thickness="thin"
                   name="456"
-                  defaultValue={[2000]}
+                  // defaultValue={silverMela}
                   min={1000}
                   max={10000}
                   step={100}
@@ -63,11 +63,11 @@ const MelaCard = () => {
                   }}
                 />
                 <div className="flex flex-row items-center gap-2 px-6">
-                    <p className="text-center font-extralight text-base">Mela: </p>
+                    <p className="text-center font-extralight text-base">Coin: </p>
                     <Input
                     type="number"
                     inputMode="numeric"
-                    defaultValue={silverMela[0]}
+                    // defaultValue={silverMela[0]}
                     value={silverMela[0]}
                     min={1000}
                     step={100}
@@ -77,9 +77,9 @@ const MelaCard = () => {
                       setSilverMela([value])
                     }} />
                 </div>
-                <p> {formatPrice(silverMelaPrice)} </p>
-              </div>
-        <div className='flex flex-col bg-card rounded-2xl w-full'>
+                <p> {`${formatPrice(silverMelaPrice)}`} </p>
+          </div>
+          <div className='flex flex-col bg-card rounded-2xl w-full'>
             <div className='block font-light text-sm m-auto p-4'>
                 <div className='p-1 flex flex-row items-center gap-2'>
                     <Icons.check/><p>Get access to 150+ AI models.</p>
@@ -97,17 +97,17 @@ const MelaCard = () => {
                     <Icons.check/><p>Private workspace.</p>
                 </div>
             </div>
-        </div>
+          </div>
       </div>
-        <Button className='mt-4' disabled={loading} onClick={onBuy}>
-          {loading && (
-          <Icons.spinner
-          className="mr-2 h-4 w-4 animate-spin"
-          aria-hidden="true"
-          />
-          )} Buy Mela
-        </Button>
-       </>
+      <Button className='mt-4' disabled={loading} onClick={onBuy}>
+        {loading && (
+        <Icons.spinner
+        className="mr-2 h-4 w-4 animate-spin"
+        aria-hidden="true"
+        />
+        )} Buy Coin
+      </Button>
+  </div>
   )
 }
 

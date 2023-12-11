@@ -18,7 +18,8 @@ import { LucideIcon,
   Code2,
   Speaker,
   Languages,
-  Edit3,} from "lucide-react";
+  Edit3,
+  ImageDown,} from "lucide-react";
 export type Item = {
   name: string;
   slug: string;
@@ -43,10 +44,10 @@ export const demos: { name: string; items: Item[] }[] = [
         icon: Crop,
       },
       {
-        name: 'Restoration',
+        name: 'Background remover',
         slug: 'restoration',
         description: 'Render multiple pages in the same layout',
-        icon: Image,
+        icon: ImageDown,
       },
     ],
   },

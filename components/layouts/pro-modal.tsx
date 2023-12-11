@@ -23,20 +23,16 @@ export const ProModal = () => {
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
       <DialogContent className="bg-accent rounded-lg border-none ring-1 ring-border ring-inset">
         <DialogHeader>
-          <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
-            <div className="flex items-center gap-x-2 font-bold text-xl">
+          <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2 font-bold text-xl">
                 Buy Awaj Meda Coins
-            </div>
           </DialogTitle>
-          <DialogDescription className="text-center pt-2 space-y-2 font-medium">
-                <Card>
+                <Card className="text-center pt-2 space-y-2 font-medium">
                   <CardHeader>
                   </CardHeader>
                   <CardContent className="w-full m-auto">
                     <MelaCard />
                   </CardContent>
                 </Card>
-          </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Link onClick={proModal.onClose} className="text-sm text-primary" href={'https://awajai.com/pricing/awaj-mela'} target="_blank">

@@ -144,6 +144,27 @@ import {Client, Databases, Account, ID, AppwriteException} from 'appwrite'
       }
     }
 
+
+    // get preferences
+    async getPreferences(){
+      try {
+        const prefs = await account.getPrefs()
+        return prefs
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    // update preferences
+    async updatePreferences({}){
+      try {
+        const prefs = await account.updatePrefs({})
+        return prefs
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     // reset password first factor
     async resetPasswordFirst({email}:any){
       const resetUrl = absoluteUrl("/signin/reset_password/step2");

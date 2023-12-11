@@ -42,7 +42,7 @@ export const simplifieds: {id:string; title: string; cat:string, strategy:string
         strategy: ''
     },
     {
-        title: 'Background remover',
+        title: 'Photo restoration',
         id:'2merkato',
         cat:'b2b',
         image: BG.src,

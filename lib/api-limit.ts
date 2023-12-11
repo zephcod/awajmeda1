@@ -1,34 +1,29 @@
-import { MAX_FREE_COUNTs } from "@/lib/constants"
 import appwriteServerDBService from "@/db/appwrite_server_db"
 
-export const increaseApiLimit =async () => {
+export const decreaseCoins =async (cost:number) => {
   
-  const user = await appwriteServerDBService.getServerAwajUser()
-  const userId = user.email
+  const user = await appwriteServerDBService.currentUser()
 
-    if (!userId){
+    if (!user){
         return
     }
+    const prefs = await appwriteServerDBService.getPreferences() as any
+    const coin = prefs?.coin
 
-    const apiLimit = user.silverCoin
-
-      if (apiLimit){
+    
+      if (coin){
+        await appwriteServerDBService.updatePreferences(coin-cost)
       }
       else{
-        
+        return
       }
 }
-export const checkApiLimit = async () => {
-  const user = await appwriteServerDBService.getServerAwajUser()
-  const userId = user.email
+export const checkApiLimit = async (cost:number) => {
+  const prefs = await appwriteServerDBService.getPreferences() as any
+  const coin = Number(prefs?.coin)
 
-    if (!userId) {
-        return false
-    }
-    
-    const apiLimit = user.silverCoin
 
-    if (!apiLimit || apiLimit < MAX_FREE_COUNTs){
+    if (coin && coin>cost){
         return true
     }
     else{
@@ -36,20 +31,3 @@ export const checkApiLimit = async () => {
     }
 }
 
-export const getApiLimit =async () => {
-  const user = await appwriteServerDBService.getServerAwajUser()
-  const userId = user.email
-    
-    if (!userId) {
-        return 0
-    }
-
-    const apiLimit = user.silverCoin
-
-    if (!apiLimit){
-        return -8888
-    }
-
-    return apiLimit
-
-}

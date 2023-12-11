@@ -1,17 +1,16 @@
 const axios = require("axios");
 
 
-
 export const getTextImage = async (data) => {
-// console.log(data.prompt)
-
+console.log(data.prompt)
+console.log(data.model)
   const encodedParams = new URLSearchParams();
   encodedParams.append("prompt", data.prompt);
   encodedParams.append("negative_prompt", "ugly, poorly drawn, deformed, deformed limbs");
   encodedParams.append("guidance", "8");
-  encodedParams.append("seed", "568542368");
+  // encodedParams.append("seed", "568542368");
   //Use this to select which model to use:
-  encodedParams.append("model", "absolute_reality_1_8_1");
+  encodedParams.append("model", data.model);
   
   const options = {
     method: 'POST',
@@ -24,13 +23,12 @@ export const getTextImage = async (data) => {
     responseType: "arraybuffer"
   };
 
-  let imgsrc = ''
+  let imgsrc 
 
 await axios.request(options).then(function (response) {
   
   let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
   imgsrc = base64ImageString
-  // console.log(base64ImageString)
     return(base64ImageString)
 
 }).catch(function (error) {

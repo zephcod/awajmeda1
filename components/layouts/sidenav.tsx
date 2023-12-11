@@ -22,7 +22,7 @@ export function GlobalNav() {
   const close = () => setIsOpen(false);
   const {authStatus} = useAuth();
   const [loadingUser, setLoadingUser] = useState(true)
-  const [coin, setCoin] = useState<boolean|null>(null)
+  const [coin, setCoin] = useState<number|null>(null)
 
 
     function delay(ms:any) {
@@ -36,8 +36,8 @@ export function GlobalNav() {
   useEffect(() => {
     (async ()=> {
         timeOut()
-        const appuser = await appwriteAuthService.currentUser()
-        const limit = appuser!.emailVerification
+        const prefs = await appwriteAuthService.getPreferences()
+        const limit = prefs?.coin
         setCoin(limit)
         setLoadingUser(false)
     }) ();

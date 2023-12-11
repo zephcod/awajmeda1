@@ -8,7 +8,7 @@ import { absoluteUrl } from "@/lib/utils";
 
 // const billingsUrl = absoluteUrl("/");
 const billingsUrl = "https://meda.awajai.com/dashboard/coins";
-const verifyUrl = "https://meda.awajai.com/dashboard/coins";
+const verifyUrl = "https://meda.awajai.com/api/chapa-v";
 const chapa = new Chapa({
   secretKey: "CHASECK_TEST-BHcbAIPojwydRGTqJTwUfbgqL8pRCCrm",
 });
@@ -59,8 +59,8 @@ export async function GET(request: NextRequest) {
         let chapaSession = await chapa.initialize(customerInfo, )
         console.log(JSON.stringify(chapaSession))
 
-        // const cookieStore = cookies()
-        // cookieStore.set("refId", String(chapaSession.tx_ref))
+        const cookieStore = cookies()
+        cookieStore.set("refId", String(customerInfo.tx_ref))
 
         return new NextResponse(JSON.stringify({ url: chapaSession.data.checkout_url }))
 
