@@ -13,11 +13,12 @@ export async function GET() {
     
     try {
         const refId = cookies().get("refId")!.value
+        const desId = cookies().get ("desId")!.value
         let chapaSession = await chapa.verify({tx_ref:refId})
         if (chapaSession.status) {
             const refill = Number(chapaSession.data.amount)*10
 
-            const user = await appwriteServerDBService.currentUser()
+            const user = await appwriteServerDBService.currentUser(desId)
             if (!user){
                 return
             }

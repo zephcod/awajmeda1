@@ -47,21 +47,20 @@ export default function GenerateButton  () {
     const cost = Number(data.count)*5
     startTransition(async()=>{
       try {
-        let uid = '0'
         const user = await appwriteAuthService.currentUser()
         if (user) {
-          uid = user!.$id
+         const uid = user!.$id
+         const res = await axios.get(`${txt2imgEndpoint}`,{
+           params:{
+             prompt:data.prompt,
+             model:data.model,
+             cost:cost,
+             des:uid
+           }
+         })
+         const _img = res.data.image
+         setImgsrc(_img)
         }
-        const res = await axios.get(`${txt2imgEndpoint}`,{
-          params:{
-            prompt:data.prompt,
-            model:data.model,
-            cost:cost,
-            des:uid
-          }
-        })
-        const _img = res.data.image
-        setImgsrc(_img)
       }catch (error:any) {
         if(error?.response?.status === 403){
           melaModal.onOpen()

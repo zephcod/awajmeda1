@@ -35,9 +35,9 @@ export class AppwriteServerDBService {
 
 
       //check if the user is logged in 
-      async isLoggedIn():Promise<boolean> {
+      async isLoggedIn(uid:string):Promise<boolean> {
         try {
-          const data = await this.currentUser()
+          const data = await this.currentUser(uid)
           return Boolean(data)
         } catch (error) {
           
@@ -46,9 +46,9 @@ export class AppwriteServerDBService {
       }
   
       //get information about current user
-      async currentUser (){
+      async currentUser (uid:string){
         try {
-          const user = await users.get('656a28d58f2a2edbf3cf')
+          const user = await users.get(uid)
           return user
         } catch (error) {
           console.log("Error getting user:"+error)

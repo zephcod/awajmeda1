@@ -2,7 +2,7 @@ import appwriteServerDBService from "@/db/appwrite_server_db"
 
 export const decreaseCoins =async (pref:{cost:number,uid:string}) => {
   
-  const user = await appwriteServerDBService.currentUser()
+  const user = await appwriteServerDBService.currentUser(pref.uid)
 
     if (!user){
         return
