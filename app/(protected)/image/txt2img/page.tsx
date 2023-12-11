@@ -27,6 +27,7 @@ import { absoluteUrl } from '@/lib/utils';
 import { img } from "./blob";
 import axios from "axios"
 import LoadingRouteUI2 from "@/components/loading/loading_route2"
+import appwriteAuthService from "@/db/appwrite_auth"
 
 type Inputs = z.infer<typeof promptSchema>
 
@@ -46,11 +47,17 @@ export default function GenerateButton  () {
     const cost = Number(data.count)*5
     startTransition(async()=>{
       try {
+        let uid = '0'
+        const user = await appwriteAuthService.currentUser()
+        if (user) {
+          uid = user!.$id
+        }
         const res = await axios.get(`${txt2imgEndpoint}`,{
           params:{
             prompt:data.prompt,
             model:data.model,
-            cost:cost
+            cost:cost,
+            des:uid
           }
         })
         const _img = res.data.image
@@ -136,6 +143,7 @@ export default function GenerateButton  () {
                         <SelectItem value="future_diffusion">Futuritic Mix</SelectItem>
                         <SelectItem value="icbinp_seco">High-quality Realistic</SelectItem>
                         <SelectItem value="papercut">Paper-cut Art</SelectItem>
+                        <SelectItem value="stablediffusion_2_0_512px">Stable Diffusion</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                     </Select>

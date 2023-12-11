@@ -19,16 +19,21 @@ export async function GET() {
             if (!user){
                 return
             }
-            const prefs = await appwriteServerDBService.getPreferences() as any
-            const coin = Number(prefs?.coin)
-        
-            
-              if (coin){
-                await appwriteServerDBService.updatePreferences(coin+refill)
-              }
-              else{
-                return
-              }
+            if (user) {
+              const uid=user!.$id
+
+              const prefs = await appwriteServerDBService.getPreferences(uid) as any
+              const coin = Number(prefs?.coin)
+          
+              
+                if (coin){
+                  const renew=coin+refill
+                  await appwriteServerDBService.updatePreferences({uid,renew})
+                }
+                else{
+                  return
+                }
+            }
 
         }
         // console.log(JSON.stringify(chapaSession.data))

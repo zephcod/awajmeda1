@@ -1,29 +1,31 @@
 import appwriteServerDBService from "@/db/appwrite_server_db"
 
-export const decreaseCoins =async (cost:number) => {
+export const decreaseCoins =async (pref:{cost:number,uid:string}) => {
   
   const user = await appwriteServerDBService.currentUser()
 
     if (!user){
         return
     }
-    const prefs = await appwriteServerDBService.getPreferences() as any
+    const prefs = await appwriteServerDBService.getPreferences(pref.uid) as any
     const coin = prefs?.coin
 
     
       if (coin){
-        await appwriteServerDBService.updatePreferences(coin-cost)
+        const _renew = coin-pref.cost
+        const upref = {renew:_renew,uid:pref.uid}
+        await appwriteServerDBService.updatePreferences(upref)
       }
       else{
         return
       }
 }
-export const checkApiLimit = async (cost:number) => {
-  const prefs = await appwriteServerDBService.getPreferences() as any
+export const checkApiLimit = async (pref:{cost:number,uid:string}) => {
+  const prefs = await appwriteServerDBService.getPreferences(pref.uid) as any
   const coin = Number(prefs?.coin)
 
 
-    if (coin && coin>cost){
+    if (coin && coin>pref.cost){
         return true
     }
     else{

@@ -57,9 +57,9 @@ export class AppwriteServerDBService {
       }
 
             // get preferences
-      async getPreferences(){
+      async getPreferences(uid:string){
         try {
-          const prefs = await users.getPrefs('656a28d58f2a2edbf3cf')
+          const prefs = await users.getPrefs(uid)
           console.log(prefs)
           return prefs
         } catch (error) {
@@ -68,9 +68,9 @@ export class AppwriteServerDBService {
       }
 
       // update preferences
-      async updatePreferences(newcoin:number){
+      async updatePreferences(upref:{renew:number,uid:string}){
         try {
-          const prefs = await users.updatePrefs('656a28d58f2a2edbf3cf',{coin:newcoin})
+          const prefs = await users.updatePrefs(upref.uid,{coin:upref.renew})
           console.log(prefs)
           return prefs
         } catch (error) {

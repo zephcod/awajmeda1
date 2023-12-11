@@ -8,11 +8,17 @@ export async function GET(request: NextRequest) {
   const _prompt = searchParams.get('prompt')
   const _model = searchParams.get('model')
   const _cost = searchParams.get('cost')
+  const _uid = searchParams.get('des')
 
-  const cost = Number(_cost)
+  let id = ''
+  if (_uid) {
+    id = _uid 
+  }
+
+  const pref = {cost:Number(_cost), uid:id}
   const sent = {prompt:_prompt, model:_model}
 
-    const freeTrial = await checkApiLimit(cost)
+    const freeTrial = await checkApiLimit(pref)
     if (!freeTrial){
       return new NextResponse('Free trial has expired.', {status:403})
     }
@@ -23,7 +29,7 @@ export async function GET(request: NextRequest) {
         status:'success',
         image:res
       }
-        await decreaseCoins(cost)
+        await decreaseCoins(pref)
         return NextResponse.json(jsonRes)
       }
 }
