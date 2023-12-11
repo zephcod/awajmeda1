@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
             },
             customization: {
                 title: 'Awaj AI',
-                description: 'From Awaj AI | Ace Digital PLC'
+                description: 'From Awaj AI Ace Digital PLC'
                 }
         }
         console.log(JSON.stringify(customerInfo))
