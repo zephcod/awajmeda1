@@ -40,7 +40,7 @@ export default function PreConfImg  () {
       try {
         const f = await getTextImage(data)
           const res = JSON.stringify(f)
-          setImgSrc(f)
+          setImgSrc(res)
           form.reset()
       } catch (error:any) {
         if(error?.response?.status === 403){
