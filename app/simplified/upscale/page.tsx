@@ -29,7 +29,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { absoluteUrl } from '@/lib/utils';
 import axios from "axios"
-import type { OurFileRouter } from "@/app/api/uploadthing/core"
 import LoadingRouteUI2 from "@/components/loading/loading_route2"
 import appwriteAuthService from "@/db/appwrite_auth"
 import {img} from '@/public/blob/blob'
