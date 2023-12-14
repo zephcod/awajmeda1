@@ -12,6 +12,7 @@ import {
 import { OAuthSignIn } from "@/components/auth/oauth_signin"
 import { SignUpForm } from "@/components/forms/signup_form"
 import { Shell } from "@/components/shells/shell"
+import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
   // metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -23,11 +24,11 @@ export default async function SignUpPage() {
   return (
     <Shell className="w-full relative my-48 p-6">
       <Card className='m-auto max-w-lg shadow-none bg-accent'>
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Register</CardTitle>
-          <CardDescription>
+      <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl text-center">Register</CardTitle>
+          {/* <CardDescription>
             Choose your preferred sign up method
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
         <CardContent className="grid gap-4">
           <OAuthSignIn />
@@ -43,7 +44,7 @@ export default async function SignUpPage() {
           </div>
           <SignUpForm />
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-wrap items-center justify-between gap-2">
           <div className="text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
@@ -54,6 +55,12 @@ export default async function SignUpPage() {
               Login 🡥 
             </Link>
           </div>
+          <Separator/>
+          <p className="text-muted-foreground text-sm font-light text-center w-full">
+            By continuing you agree to Awaj AI&apos;s{' '}
+            <Link className="font-normal underline" href={'https://www.awajai.com/privacy'} target="_blank">Privacy Policy</Link>{' '}and{' '} 
+            <Link className="font-normal underline" href={'https://www.awajai.com/terms'} target="_blank">Terms</Link>.
+          </p>
         </CardFooter>
       </Card>
     </Shell>

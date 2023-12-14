@@ -39,13 +39,13 @@ export const demos: { name: string; items: Item[] }[] = [
       },
       {
         name: 'Upscale',
-        slug: 'upscale',
+        slug: 'simplified/upscale',
         description: 'Organize routes without affecting URL paths',
         icon: Crop,
       },
       {
         name: 'Background remover',
-        slug: 'restoration',
+        slug: 'simplified/background-remover',
         description: 'Render multiple pages in the same layout',
         icon: ImageDown,
       },

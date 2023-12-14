@@ -107,15 +107,8 @@ export function FileDialog<TFieldValues extends FieldValues>({
   }, [])
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" disabled={disabled}>
-          Upload Images
-          <span className="sr-only">Upload Images</span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px]">
-        <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
+      <div className="sm:max-w-[480px] bg-card">
+        <p className="relative left-5 top-4 text-base font-medium text-muted-foreground">
           Upload your images
         </p>
         <div
@@ -152,7 +145,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
                 aria-hidden="true"
               />
               <p className="mt-2 text-base font-medium text-muted-foreground">
-                Drag {`'n'`} drop file here, or click to select file
+                Drag and drop file here, or click to select file
               </p>
               <p className="text-sm text-slate-500">
                 Please upload file with size less than {formatBytes(maxSize)}
@@ -200,8 +193,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
             <span className="sr-only">Remove All</span>
           </Button>
         ) : null}
-      </DialogContent>
-    </Dialog>
+      </div>
   )
 }
 
