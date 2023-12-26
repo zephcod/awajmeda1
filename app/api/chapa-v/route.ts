@@ -26,12 +26,13 @@ export async function GET() {
               const uid=user!.$id
 
               const prefs = await appwriteServerDBService.getPreferences(uid) as any
-              const coin = Number(prefs?.coin)
+              const _coin = Number(prefs?.coin)
+              const proPic = (prefs?.propic)
           
               
-                if (coin){
-                  const renew=coin+refill
-                  await appwriteServerDBService.updatePreferences({uid,renew})
+                if (_coin){
+                  const coin=_coin+refill
+                  await appwriteServerDBService.updatePreferences({proPic,uid,coin})
                 }
                 else{
                   return
