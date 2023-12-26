@@ -108,13 +108,13 @@ export function FileDialog<TFieldValues extends FieldValues>({
 
   return (
       <div className="sm:max-w-[480px] bg-card">
-        <p className="relative left-5 top-4 text-base font-medium text-muted-foreground">
-          Upload your images
+        <p className="relative text-base font-medium text-muted-foreground">
+          Upload here 
         </p>
         <div
           {...getRootProps()}
           className={cn(
-            "group relative mt-8 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
+            "group relative mt-4 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
             "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             isDragActive && "border-muted-foreground/50",
             disabled && "pointer-events-none opacity-60",

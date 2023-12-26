@@ -4,10 +4,10 @@ import { Shell } from "@/components/shells/shell"
 
 export default function PurchasesLoading() {
   return (
-    <Shell variant="sidebar">
+    <Shell variant="sidebar" className="m-auto mt-4 max-w-4xl">
       <Header
-        title="Purchases"
-        description="Manage your purchases."
+        title="Get Support"
+        description="Submit ticket and contact with customer support"
         size="sm"
       />
       <div className="grid gap-10 rounded-lg border p-4">

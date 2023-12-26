@@ -9,11 +9,12 @@ export const decreaseCoins =async (pref:{cost:number,uid:string}) => {
     }
     const prefs = await appwriteServerDBService.getPreferences(pref.uid) as any
     const coin = prefs?.coin
+    const img = prefs?.propic as unknown as string
 
     
       if (coin){
         const _renew = coin-pref.cost
-        const upref = {renew:_renew,uid:pref.uid}
+        const upref = {proPic:img, uid:pref.uid, coin:_renew}
         await appwriteServerDBService.updatePreferences(upref)
       }
       else{

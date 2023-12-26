@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function PurchasesPage() {
   return (
-    <Shell variant="sidebar" className="m-auto mt-0">
+    <Shell variant="sidebar" className="m-auto mt-4 max-w-4xl">
       <Header
         title="Get Support"
         description="Submit ticket and contact with customer support"

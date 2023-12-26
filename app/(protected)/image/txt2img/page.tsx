@@ -28,6 +28,8 @@ import { img } from "./blob";
 import axios from "axios"
 import LoadingRouteUI2 from "@/components/loading/loading_route2"
 import appwriteAuthService from "@/db/appwrite_auth"
+import appwriteDBService from "@/db/appwrite_db"
+import appwriteStorageService from "@/db/appwrite_storage"
 
 type Inputs = z.infer<typeof promptSchema>
 
@@ -42,6 +44,31 @@ export default function GenerateButton  () {
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
   })
+
+  function onDownload() {   
+    if (imgsrc && imgsrc !== img) {
+      // Remove the data:image/png;base64, prefix if it exists
+        const base64WithoutPrefix = imgsrc.replace(/^data:image\/[a-z]+;base64,/, '');
+
+        // Decode base64 string
+        const decodedData = atob(base64WithoutPrefix);
+
+        // Create a Uint8Array from the decoded data
+        const uint8Array = new Uint8Array(decodedData.length);
+        for (let i = 0; i < decodedData.length; i++) {
+          uint8Array[i] = decodedData.charCodeAt(i);
+        }
+      const blob = new Blob([uint8Array], { type: 'image/png' });
+        const url = URL.createObjectURL(blob)
+       const link = document.createElement('a');
+       link.href = url;
+       link.download = 'image.png';
+       document.body.appendChild(link);
+       link.click();
+       document.body.removeChild(link);
+       URL.revokeObjectURL(url);
+    }
+  }
 
   function onSubmit(data: Inputs){
     const cost = Number(data.count)*5
@@ -58,8 +85,30 @@ export default function GenerateButton  () {
              des:uid
            }
          })
+         
          const _img = res.data.image
          setImgsrc(_img)
+             // Remove the data:image/png;base64, prefix if it exists
+          const base64WithoutPrefix = _img.replace(/^data:image\/[a-z]+;base64,/, '');
+
+          // Decode base64 string
+          const decodedData = atob(base64WithoutPrefix);
+
+          // Create a Uint8Array from the decoded data
+          const uint8Array = new Uint8Array(decodedData.length);
+          for (let i = 0; i < decodedData.length; i++) {
+            uint8Array[i] = decodedData.charCodeAt(i);
+          }
+         const blob = new Blob([uint8Array], { type: 'image/png' });
+
+         // Create a File from the Blob
+          const file = new File([blob], `${data.prompt}.png`||'image.png', { type: 'image/png' });
+
+          const gen = await appwriteStorageService.uploadGenerated(file)
+          const preview = await appwriteStorageService.previewFile({id:gen!.$id,bucket:'6584a911a70baf1b4a58'}) 
+          const gal = {image:[gen!.$id],prompt:data.prompt,model:data.model, user:uid,preview:preview}
+          const gallery = await appwriteDBService.newGalleryItem(gal)
+
         }
       }catch (error:any) {
         if(error?.response?.status === 403){
@@ -167,6 +216,10 @@ export default function GenerateButton  () {
             
         </form>
       </Form>
+      {imgsrc && imgsrc !== img ?
+      <Button onClick={onDownload}>
+        Download
+      </Button>:''}
       {isPending?
       <LoadingRouteUI2/>
       :<Image width='500' height='200' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}

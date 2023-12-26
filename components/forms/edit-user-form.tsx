@@ -1,8 +1,7 @@
 "use client"
 
-import * as React from "react"
-import Image from "next/image"
-import type { FileWithPreview } from "@/types"
+import { useState, useTransition } from 'react'
+import Image, { StaticImageData } from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -10,7 +9,6 @@ import { type z } from "zod"
 
 // import { getSubcategories } from "@/config/products"
 import { absoluteUrl, catchError, isArrayOfFile } from "@/lib/utils"
-import { productSchema } from "@/lib/validations/product"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -22,21 +20,14 @@ import {
   UncontrolledFormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { FileDialog } from "@/components/file-dialog"
 import { Icons } from "@/components/icons"
-import { Zoom } from "@/components/zoom-image"
-import appwriteDBService from "@/db/appwrite_db"
 import { useRouter } from "next/navigation"
-import { userSchema } from "@/lib/validations/user"
+import { AwajUser, userSchema } from "@/lib/validations/user"
+import appwriteAuthService from "@/db/appwrite_auth"
+import appwriteStorageService from "@/db/appwrite_storage"
+import BG from '@/public/gallery/pre-conf/portriat.png'
+import axios from 'axios'
 
 
 type Inputs = z.infer<typeof userSchema>
@@ -44,27 +35,48 @@ type Inputs = z.infer<typeof userSchema>
 
 export function EditUserForm( props:Inputs ) {
   const router = useRouter()
-  const [files, setFiles] = React.useState<FileWithPreview[] | null>(null)
-  const [isPending, startTransition] = React.useTransition()
+  const [files, setFiles] = useState<File | StaticImageData | null>(BG)
+  const [isPending, startTransition] = useTransition()
   const accUrl = absoluteUrl("/dashboard/account");
+
 
   const form = useForm<Inputs>({
     resolver: zodResolver(userSchema),
   })
 
-  const previews = form.watch("profilePic") as unknown as FileWithPreview[] | null
-  // const subcategories = getSubcategories()
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        await appwriteDBService.updateUser(data)
-        toast.message("Congratulations!", {
-          description: 'Your phone has been confirmed',
-        })
-        router.push(accUrl)
-        form.reset()
-        setFiles(null)
+        const user = await appwriteAuthService.currentUser()
+        if (user!.name !== data.name) {
+          await appwriteAuthService.updateName(data.name)
+        }
+        const pref = await appwriteAuthService.getPreferences()
+        const coin = pref?.coin
+        if (user&&files) {
+            const uid = user!.$id
+            const res = await appwriteStorageService.uploadProfile(files)
+            console.log(res)
+
+              if (res) {
+                const proPic = res!.$id
+                await axios.get('/api/update-profile',{
+                  params:{
+                    img:proPic,
+                    des:uid,
+                    c:coin
+                  }
+                })
+              }
+
+            toast.message("Success", {
+              description: 'Your account has been successfully updated.',
+            })
+            router.push(accUrl)
+            form.reset()
+            setFiles(null)
+        }
       } catch (err) {
         toast.message("Error occured:", {
           description: `${err}`,
@@ -106,38 +118,9 @@ export function EditUserForm( props:Inputs ) {
             message={form.formState.errors.bio?.message}
           />
         </FormItem>
-        <FormItem className="flex w-full flex-col gap-1.5">
-          <FormLabel>Images</FormLabel>
-          {/* {!isUploading && previews?.length ? (
-            <div className="flex items-center gap-2">
-              {previews.map((file) => (
-                <Zoom key={file.name}>
-                  <Image
-                    src={file.preview}
-                    alt={file.name}
-                    className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
-                    width={80}
-                    height={80}
-                  />
-                </Zoom>
-              ))}
-            </div>
-          ) : null} */}
-          <FormControl>
-            <FileDialog
-              setValue={form.setValue}
-              name="profilePic"
-              maxFiles={3}
-              maxSize={1024 * 1024 * 4}
-              files={files}
-              setFiles={setFiles}
-              // isUploading={isUploading}
-              disabled={isPending}
-            />
-          </FormControl>
-          <UncontrolledFormMessage
-            message={form.formState.errors.profilePic?.message}
-          />
+        <FormItem>
+          <FormLabel>Profile picture</FormLabel>
+          <Input id="profilePic" type="file" onChange={(e)=>{setFiles(e.target.files![0])}}/>
         </FormItem>
         <Button className="w-fit" disabled={isPending}>
           {isPending && (

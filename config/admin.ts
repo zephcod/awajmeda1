@@ -19,7 +19,8 @@ import { LucideIcon,
   Speaker,
   Languages,
   Edit3,
-  ImageDown,} from "lucide-react";
+  ImageDown,
+  QrCode,} from "lucide-react";
 export type Item = {
   name: string;
   slug: string;
@@ -48,6 +49,12 @@ export const demos: { name: string; items: Item[] }[] = [
         slug: 'simplified/background-remover',
         description: 'Render multiple pages in the same layout',
         icon: ImageDown,
+      },
+      {
+        name: 'QR Code',
+        slug: 'simplified/qr-code',
+        description: 'Render multiple pages in the same layout',
+        icon: QrCode,
       },
     ],
   },

@@ -36,6 +36,12 @@ export const verfifyEmailSchema = z.object({
     .max(6),
 })
 
+export const updatePhoneSchema = z.object({
+  phone: z.string().min(13,{
+    message: 'Please put appropriate phone number with area code. Eg. +251'
+  }).max(13),
+})
+
 export const checkEmailSchema = z.object({
   email: authSchema.shape.email,
 })

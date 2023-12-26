@@ -9,6 +9,7 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import Link from 'next/link'
+import FeedbackForm from '../forms/feedback-form'
   
 
 const TronHeader = () => {
@@ -26,13 +27,21 @@ const TronHeader = () => {
             ለማጅ ነን | Beta Mode
             </p>
             <Dialog>
-                <DialogTrigger className='px-3.5 py-1 text-sm ring-1 ring-border rounded-md'>Leave Feedback</DialogTrigger>
-                <DialogContent className='p-4 bg-accent'>
+                <DialogTrigger className='px-3.5 py-1 text-sm ring-1 ring-border rounded-md'>Give Feedback</DialogTrigger>
+                <DialogContent className='p-4 bg-card max-w-5xl h-3/4 overflow-scroll border-none ring-1 ring-border'>
                     <DialogHeader>
-                    <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                    <DialogTitle className='text-center text-muted-foreground'>
+                        <div>
+                            <h3 className="pt-4 text-2xl text-center font-bold leading-[1.15] lg:text-3xl">
+                                Provide feedback on your experience
+                            </h3>
+                            <p className="mt-1 mb-4 text-center">👉{' '}
+                            <span className="underline">Suggestions and compliants are welcome</span>
+                            </p>
+                        </div>
+                    </DialogTitle>
                     <DialogDescription>
-                        This action cannot be undone. This will permanently delete your account
-                        and remove your data from our servers.
+                        <FeedbackForm/>
                     </DialogDescription>
                     </DialogHeader>
                 </DialogContent>

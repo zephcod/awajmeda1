@@ -44,7 +44,7 @@ const HelpMenu = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
+                  {/* <DropdownMenuLabel className="font-normal">
                     {authStatus?
                       <div className="flex flex-col space-y-1">
                       <p className="text-sm leading-none text-muted-foreground">
@@ -54,10 +54,10 @@ const HelpMenu = () => {
                     :
                     ''}
                   </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator /> */}
                   <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/support">
+                      <Link href="/guide">
                         <Icons.product
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
@@ -67,7 +67,7 @@ const HelpMenu = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/gallery">
+                      <Link href="/support">
                         <Icons.addCircle
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
@@ -77,7 +77,7 @@ const HelpMenu = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/account">
+                      <Link href="https://www.awajai.com/terms" target="_blank">
                         <Icons.arrowExternalLink
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
@@ -87,7 +87,7 @@ const HelpMenu = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/billing">
+                      <Link href="https://www.awajai.com/privacy" target="_blank">
                         <Icons.arrowExternalLink
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
@@ -109,7 +109,7 @@ const HelpMenu = () => {
                         <DropdownMenuShortcut></DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
-                  <DropdownMenuSeparator />
+                  {/* <DropdownMenuSeparator />
                     <DropdownMenuItem asChild disabled>
                       <Link href="/dashboard/settings">
                         <Icons.settings
@@ -119,7 +119,7 @@ const HelpMenu = () => {
                         Settings
                         <DropdownMenuShortcut></DropdownMenuShortcut>
                       </Link>
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>

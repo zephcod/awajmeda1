@@ -1,6 +1,5 @@
 'use client'
 import appwriteAuthService from "@/db/appwrite_auth"
-import appwriteDBService from "@/db/appwrite_db"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Header } from "@/components/header"
 import { Shell } from "@/components/shells/shell"
@@ -18,13 +17,10 @@ import { formatDate } from "@/lib/utils"
 
 
 const AccountPage = () => {
-  const [user, setUser] = useState<AwajUser|null>(null)
   const [appuser, setAppUser] = useState<Models.Preferences|null>(null)
   let ver = false
   useEffect(()=>{
     (async () => {
-      const iuser = await appwriteDBService.getUser()
-      setUser(iuser)
       const iappuser = await appwriteAuthService.currentUser()
       setAppUser(iappuser)
       if (userId && secret) {
@@ -38,7 +34,7 @@ const AccountPage = () => {
   const userId = urlParams.get('userId')
   const secret = urlParams.get('secret')
 
-  if (!user||!appuser) {
+  if (!appuser) {
     return (<LoadingRouteUI2/>);
   }
   return (
@@ -73,7 +69,7 @@ const AccountPage = () => {
       <p className="text-lg font-semibold text">Personal Info:</p>
         <div className="pl-2 flex flex-col gap-3 text-base text-muted-foreground">
           <Avatar>
-            <AvatarImage src={user?.profilePic} alt={user?.name}/>
+            <AvatarImage src={appuser?.profilePic} alt={appuser?.name}/>
             <AvatarFallback><Icons.user2/></AvatarFallback>
           </Avatar>
           <p>Name:{' '}{appuser?.name}</p>
@@ -93,14 +89,24 @@ const AccountPage = () => {
       <p className="text-lg font-semibold text">Stats:</p>
         <div className="pl-2 flex flex-col gap-3 text-base text-muted-foreground">
           <p>Member since:{' '}{ formatDate(appuser?.$createdAt) }</p>
-          <p>Last login:{' '}{ formatDate(appuser?.accessedAt) }</p>
+          {/* <p>Last login:{' '}{ formatDate(appuser?.accessedAt) }</p> */}
           <div className="flex flex-col md:flex-row gap-2 pl-2 md:pl-0 items-baseline">
             <p>Verification:{' '}</p>
               <div className="flex flex-row gap-3"><p>Email: </p>{appuser?.emailVerification?<p>✔️</p>:<p>❌</p>}</div>
               <div className="flex flex-row gap-3"><p>Phone: </p>{appuser?.phoneVerification?<p>✔️</p>:<p>❌</p>}</div>
             {appuser?.emailVerification && appuser?.phoneVerification ?<></>:
+            appuser?.emailVerification?
+            <Link href="/signup/verify/update-phone" className="text-card-foreground underline-offset-4 transition-colors hover:underline">
+                <div className='text-muted-foreground flex flex-row items-center justify-center gap-1 ring-1 ring-border rounded-md px-4 py-2'>
+                  <p className='text-sm'>Verify phone</p>
+                  <Icons.arrowUpRight className='h-4 w-4'/>
+                </div>
+            </Link>:
             <Link href="/signup/verify" className="text-card-foreground underline-offset-4 transition-colors hover:underline">
-                Verify now 🡥
+                <div className='text-muted-foreground flex flex-row items-center justify-center gap-1 ring-1 ring-border rounded-md px-4 py-2'>
+                  <p className='text-sm'>Verify now</p>
+                  <Icons.arrowUpRight className='h-4 w-4'/>
+                </div>
             </Link>}
           </div>
           <p>Memberships:{' '}{appuser?.labels}</p>

@@ -108,7 +108,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             aria-label="Select a team"
             className={cn("w-[200px] justify-between", className)}
           >
-            <Avatar className="h-8 w-8">
+            <Avatar className="h-8 w-8 p-0.5">
               {user?.profilePic?
               <AvatarImage
                 src={user.profilePic}
@@ -177,7 +177,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
           </Command>
         </PopoverContent>
       </Popover>
-      <DialogContent>
+      <DialogContent className="bg-card">
         <DialogHeader>
           <DialogTitle>Create team</DialogTitle>
           <DialogDescription>
@@ -188,15 +188,15 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
           <div className="space-y-4 py-2 pb-4">
             <div className="space-y-2">
               <Label htmlFor="name">Team name</Label>
-              <Input id="name" placeholder="Acme Inc." />
+              <Input id="name" placeholder="ET PLC" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="plan">Subscription plan</Label>
               <Select>
-                <SelectTrigger>
+                <SelectTrigger className="">
                   <SelectValue placeholder="Select a plan" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-accent border-none ring-1 ring-border">
                   <SelectItem value="free">
                     <span className="font-medium">Essential</span> -{" "}
                     <span className="text-muted-foreground">

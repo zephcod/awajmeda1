@@ -11,6 +11,8 @@ console.log(data.model)
   // encodedParams.append("seed", "568542368");
   //Use this to select which model to use:
   encodedParams.append("model", data.model);
+  encodedParams.append("count", data.count);
+
   
   const options = {
     method: 'POST',
@@ -26,6 +28,8 @@ console.log(data.model)
   let imgsrc 
 
 await axios.request(options).then(function (response) {
+  const data = response.headers
+  console.log(data)
   
   let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
   imgsrc = base64ImageString

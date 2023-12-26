@@ -43,16 +43,15 @@ export function GlobalNav() {
     }) ();
     
     function timeOut (){
-      delay(10000)
+      delay(20000)
       setLoadingUser(false)
       }
   }, [])
 
 
   return (
-    <div className="fixed h-fit lg:h-screen top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-between">
-      <div>
-        <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 py-4 lg:h-auto justify-between">
+    <div className="fixed h-fit lg:h-screen top-0 z-30 flex w-full flex-col border-b border-border bg-card lg:bottom-0 lg:z-auto lg:w-72 lg:border-b-0 lg:border-r lg:border-border justify-start">
+        <div className="flex h-14 items-center pl-4 pr-16 lg:pr-4 lg:pt-4 lg:h-auto justify-start gap-4">
           {authStatus ? 
             (<UserMenu/>)
              : loadingUser?
@@ -100,11 +99,17 @@ export function GlobalNav() {
 
         <div
           className={clsx('overflow-y-auto lg:static lg:block', {
-            'fixed inset-x-0 bottom-0 top-14 mt-px bg-card': isOpen,
+            'fixed ml-36 md:ml-0 inset-x-0 bottom-0 top-14 mt-px bg-card': isOpen,
             hidden: !isOpen,
           })}
         >
-          <nav className="space-y-6 px-4 pb-24 pt-5 h-[400px] lg:h-[500px] xl:h-[650px] 2xl:h-[800px] overflow-y-auto">
+          <nav className="space-y-6 px-4 pb-24 pt-5">
+          <Link href={'/'} className='flex lg:hidden flex-row items-center'>
+            <Icons.upload/>
+            <h3 className="font-semibold text-sm tracking-wide text-secondary ml-2">
+                Awaj Meda Home
+            </h3>
+          </Link>
           {demos.map((section) => {
               return (
                 <div key={section.name}>
@@ -127,12 +132,6 @@ export function GlobalNav() {
           })}
           </nav>
         </div>
-      </div>
-      <div className='hidden lg:flex p-4 text-muted-foreground items-center text-sm flex-row gap-2 justify-evenly'>
-        <HelpMenu/>
-          <p>|</p>
-        <ThemeToggle/>
-      </div>
     </div>
   );
 }

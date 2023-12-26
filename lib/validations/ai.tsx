@@ -20,3 +20,11 @@ export const promptSchema = z.object({
     .nullable()
     .default(null),
     })
+
+export const imguploadSchema = z.object({
+  images: z
+  .unknown()
+  .optional()
+  .nullable()
+  .default(null),
+  })

@@ -1,5 +1,4 @@
 'use client'
-// import React from 'react'
 import { useState, useTransition } from 'react'
 import appwriteAuthService from '@/db/appwrite_auth'
 import axios from 'axios'
@@ -69,7 +68,7 @@ export default function MelaCard ()  {
                   aria-label="Enterprise package slider"
                   thickness="thin"
                   name="456"
-                  min={1000}
+                  min={500}
                   max={10000}
                   step={100}
                   value={silverMela}
@@ -85,7 +84,7 @@ export default function MelaCard ()  {
                     type="number"
                     inputMode="numeric"
                     value={silverMela[0]}
-                    min={1000}
+                    min={500}
                     step={100}
                     max={10000}
                     onChange={(e) => {

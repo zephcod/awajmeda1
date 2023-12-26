@@ -27,7 +27,8 @@ function ArticleCard (props:ArticleCardrProps) {
       <Image
           src={props.img}
           fill={true}
-          alt=""
+          sizes='33vw'
+          alt={props.title}
           className={styles.image}
           />
     </div>

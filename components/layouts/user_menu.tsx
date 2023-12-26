@@ -19,14 +19,23 @@ import '@/styles/globals.css'
 import useAuth from "@/hooks/use_auth"
 import { AwajUser } from "@/lib/validations/user"
 import appwriteAuthService from "@/db/appwrite_auth"
+import { ThemeToggle } from "./theme_toggle"
+import HelpMenu from "./help_menu"
+import appwriteStorageService from "@/db/appwrite_storage"
 
 const UserMenu = () => {
   const {authStatus} = useAuth();
   const [user, setUser] = useState<AwajUser|null>(null)
+  const [proPic, setProPic] = useState<undefined | null | URL>(null) 
   
   useEffect(()=>{
     (async () => {
       const iuser = await appwriteAuthService.currentUser()
+      const prefs = await appwriteAuthService.getPreferences()
+
+      const vf = {bucket:'658477e7eef2f71d1693',id:prefs!.propic}
+      const image = await appwriteStorageService.viewFile(vf)
+      setProPic(image)
       setUser(iuser)
     })()
   },[])
@@ -42,10 +51,10 @@ if (!authStatus) {
                     className="relative h-8 w-8 rounded-full"
                   >
                     <Avatar className="h-8 w-8">
-                      {user?.profilePic?
+                      {proPic?
                       <AvatarImage
-                        src={user.profilePic}
-                        alt={user.name}
+                        src={proPic as unknown as string}
+                        alt={'profile picture'}
                       />:<></>}
                       <AvatarFallback><Icons.user2/></AvatarFallback>
                     </Avatar>
@@ -53,10 +62,10 @@ if (!authStatus) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm leading-none text-muted-foreground">
+                    <div className="flex flex-row items-center">
+                      <p className="text-sm leading-none text-muted-foreground overflow-hidden">
                         {user?.email?<span>{user.email}</span>:<></>}
-                      </p>
+                      </p><HelpMenu/>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -82,7 +91,7 @@ if (!authStatus) {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/billing">
+                      <Link href="/dashboard/coins">
                         <Icons.addCircle
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
@@ -116,15 +125,20 @@ if (!authStatus) {
                       </Link>
                     </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild disabled>
-                      <Link href="/dashboard/settings">
-                        <Icons.settings
-                          className="mr-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                        Settings
-                        <DropdownMenuShortcut></DropdownMenuShortcut>
-                      </Link>
+                    <DropdownMenuItem asChild >
+                        <div className="flex flex-row w-full justify-between">
+                          <Link href="/dashboard/settings" >
+                            <div className="flex flex-row">
+                              <Icons.settings
+                                className="mr-2 h-4 w-4"
+                                aria-hidden="true"
+                              />
+                              Settings
+                            </div>
+                            <DropdownMenuShortcut></DropdownMenuShortcut>
+                          </Link>
+                          <div><ThemeToggle/></div>
+                        </div>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>

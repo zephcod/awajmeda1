@@ -68,9 +68,9 @@ export class AppwriteServerDBService {
       }
 
       // update preferences
-      async updatePreferences(upref:{renew:number,uid:string}){
+      async updatePreferences(upref:{proPic:string,uid:string,coin:number}){
         try {
-          const prefs = await users.updatePrefs(upref.uid,{coin:upref.renew})
+          const prefs = await users.updatePrefs(upref.uid,{propic:upref.proPic, coin:upref.coin})
           console.log(prefs)
           return prefs
         } catch (error) {

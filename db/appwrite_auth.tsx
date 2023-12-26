@@ -38,7 +38,8 @@ import {Client, Databases, Account, ID, AppwriteException} from 'appwrite'
               )
               console.log(res)
               return this.login({email, password})
-          } catch (error) {
+          } 
+          catch (error) {
             console.log(error)
           }
         } else{
@@ -52,18 +53,30 @@ import {Client, Databases, Account, ID, AppwriteException} from 'appwrite'
     // update phone number
     async updatePhone({phone, pass}:any){
       try {
-        await account.updatePhone(phone,pass)
-        const user = await account.get()
-        const uid = user.$id
-        await database.updateDocument(
-          '650a05f49ac5d9e273b8',
-          '650a062ace779e21c647',
-          uid,
-          {'phone':phone})
+        const uphone = await account.updatePhone(phone,pass)
+        return uphone
+        // const user = await account.get()
+        // const uid = user.$id
+        // await database.updateDocument(
+        //   '650a05f49ac5d9e273b8',
+        //   '650a062ace779e21c647',
+        //   uid,
+        //   {'phone':phone})
       } catch (error) {
         throw error
       }
     }
+
+    // update user display name
+    async updateName(name:string){
+      try {
+        const newname = await account.updateName(name)
+        return newname
+      } catch (error) {
+        throw error
+      }
+    }
+    
 
     //login user
     async login({email, password}:any){
@@ -126,7 +139,7 @@ import {Client, Databases, Account, ID, AppwriteException} from 'appwrite'
     // verify email
     async verifyEmail(){
       try {
-        await account.createVerification('http://localhost:3000/dashboard/account')
+        await account.createVerification(absoluteUrl("/dashboard/account"))
       } catch (error) {
         console.log(error)
       }
@@ -166,6 +179,7 @@ import {Client, Databases, Account, ID, AppwriteException} from 'appwrite'
     async getPreferences(){
       try {
         const prefs = await account.getPrefs()
+        console.log(prefs)
         return prefs
       } catch (error) {
         console.log(error)
