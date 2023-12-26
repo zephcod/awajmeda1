@@ -49,6 +49,7 @@ import {
 import { AwajUser } from "@/lib/validations/user"
 import appwriteAuthService from "@/db/appwrite_auth"
 import { Icons } from "../icons"
+import appwriteStorageService from "@/db/appwrite_storage"
 
 const groups = [
   {
@@ -84,15 +85,19 @@ interface TeamSwitcherProps extends PopoverTriggerProps {}
 export default function TeamSwitcher({ className }: TeamSwitcherProps) {
   const [open, setOpen] = React.useState(false)
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false)
-  const [selectedTeam, setSelectedTeam] = React.useState<Team>(
-    groups[0].teams[0]
-  )
+  const [selectedTeam, setSelectedTeam] = React.useState<Team>(groups[0].teams[0])
 
   const [user, setUser] = React.useState<AwajUser|null>(null)
+  const [proPic, setProPic] = React.useState<undefined | null | URL>(null) 
   
   React.useEffect(()=>{
     (async () => {
       const iuser = await appwriteAuthService.currentUser()
+      const prefs = await appwriteAuthService.getPreferences()
+
+      const vf = {bucket:'658477e7eef2f71d1693',id:prefs!.propic}
+      const image = await appwriteStorageService.viewFile(vf)
+      setProPic(image)
       setUser(iuser)
     })()
   },[])
@@ -111,7 +116,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             <Avatar className="h-8 w-8 p-0.5">
               {user?.profilePic?
               <AvatarImage
-                src={user.profilePic}
+                src={proPic as unknown as string}
                 alt={user.name}
               />:<></>}
               <AvatarFallback><Icons.user2/></AvatarFallback>
