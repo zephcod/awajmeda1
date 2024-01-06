@@ -320,7 +320,7 @@ export default function GenerateButton  () {
                           <FormItem className="w-full">
                             <FormLabel>
                               Type negative prompt here
-                              <p className="font-light text-xs">Describe what you DON'T want in the generated image...</p>
+                              <p className="font-light text-xs">Describe what you DON&apos;T want in the generated image...</p>
                               </FormLabel>
                             <FormControl>
                               <Textarea
