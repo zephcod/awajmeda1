@@ -3,12 +3,16 @@ import { decreaseCoins, checkApiLimit } from '@/lib/api-limit'
 import { getTextImage } from "@/app/_actions/ai/text-image";
 import axios from "axios";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const {searchParams} = new URL(request.url)
+  const post = await request.json()
+  const body = post.params
   const _prompt = searchParams.get('prompt')
   const _model = searchParams.get('model')
-  const _cost = searchParams.get('cost')
-  const _uid = searchParams.get('des')
+  // const _cost = searchParams.get('cost')
+  // const _uid = searchParams.get('des')
+  const _cost = body.cost
+  const _uid = body.des
 
   let id = ''
   if (_uid) {
@@ -16,7 +20,7 @@ export async function GET(request: NextRequest) {
   }
 
   const pref = {cost:Number(_cost), uid:id}
-  const sent = {prompt:_prompt, model:_model}
+  console.log(body)
 
     const freeTrial = await checkApiLimit(pref)
     if (!freeTrial){
@@ -24,7 +28,7 @@ export async function GET(request: NextRequest) {
     }
     
     else{
-      const res = await getTextImage(sent)
+      const res = await getTextImage(body)
       let jsonRes = {
         status:'success',
         image:res

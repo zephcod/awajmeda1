@@ -76,14 +76,11 @@ export function GlobalNav() {
               </>
             )}
           <div className='w-fit text-sm '>
-            <Badge onClick={melaModal.onOpen} variant='secondary' className='hover:cursor-pointer ring-1 ring-border'>
+            {authStatus?<Badge onClick={melaModal.onOpen} variant='secondary' className='hover:cursor-pointer ring-1 ring-border'>
               <p>Coins:</p>
               <Icons.circle fill='yellow' height={10}/>
-              <p>
-                {authStatus?coin:'--'}</p>
-              {/* <Icons.circle fill='yellow' height={10}/>
-              <p>0</p> */}
-            </Badge>
+              <p>{coin}</p>
+            </Badge>:<></>}
           </div>
         </div>
         <button

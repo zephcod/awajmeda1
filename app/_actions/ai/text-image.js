@@ -2,17 +2,23 @@ const axios = require("axios");
 
 
 export const getTextImage = async (data) => {
-console.log(data.prompt)
-console.log(data.model)
+  console.log(data.prompt)
   const encodedParams = new URLSearchParams();
   encodedParams.append("prompt", data.prompt);
-  encodedParams.append("negative_prompt", "ugly, poorly drawn, deformed, deformed limbs");
-  encodedParams.append("guidance", "8");
-  // encodedParams.append("seed", "568542368");
-  //Use this to select which model to use:
+  encodedParams.append("guidance", data.guidance);
+  encodedParams.append("height", data.height);
+  encodedParams.append("width", data.width);
   encodedParams.append("model", data.model);
-  encodedParams.append("count", data.count);
-
+  
+  if (data.seed) {
+    encodedParams.append("seed", data.seed);
+  }
+  if (data.negative) {
+    encodedParams.append("negative_prompt", data.negative);
+  } else {
+    encodedParams.append("negative_prompt", 'ugly, poorly drawn, deformed, deformed limbs');
+  }
+  
   
   const options = {
     method: 'POST',
@@ -28,8 +34,8 @@ console.log(data.model)
   let imgsrc 
 
 await axios.request(options).then(function (response) {
-  const data = response.headers
-  console.log(data)
+  // const data = response.data
+  // console.log(data)
   
   let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
   imgsrc = base64ImageString

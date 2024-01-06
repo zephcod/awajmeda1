@@ -58,7 +58,7 @@ const QRCodeTemplate: FC<PropsWithChildren> = ({ children }) => {
   const classes = useStyles()
   return (
     <div className={classes.root} id="fancy-qr-code">
-      <Image alt="logo" src={BG.src}></Image>
+      <Image alt="logo" width={300} height={300} src={BG.src}></Image>
       <p className="mt-7" >
         To register, scan the QR Code.
       </p>

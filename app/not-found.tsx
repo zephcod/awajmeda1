@@ -18,7 +18,6 @@ export default function NotFound ()  {
       <Image
           sizes={'lg'}
           alt={'page not found'}
-          objectFit={'fit'}
           width={640}
           height={640}
           src={NotImage.src}

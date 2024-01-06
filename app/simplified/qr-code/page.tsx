@@ -74,7 +74,14 @@ const QrCode = () => {
     startTransition(async()=>{
     // const canvas = document.querySelector("#qrcode-canvas") as HTMLCanvasElement
     
-    const canvas = (await html2canvas(document.getElementById("canvas")!)).toDataURL("image/png").replace("image/png", "image/octet-stream")
+    const canvas = (await html2canvas(document.getElementById("qrcanvas")!,{
+      allowTaint: true,
+      height:288,
+      width:288,
+      useCORS: true,
+      foreignObjectRendering: true,}))
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream")
 
       if (!canvas) throw new Error("<canvas> not found in the DOM")
       else{
@@ -241,26 +248,28 @@ const QrCode = () => {
         </form>
       </Form>
       {loadingQR?
-        <div className='bg-accent rounded-md p-3 ring-1 ring-border shadow-md' id="canvas">
-          <QRCodeTemplate>
-            <QRCodeCanvas
+        <div className='z-50 bg-accent rounded-md p-3 ring-1 ring-border shadow-md' id="qrcanvas">
+          {/* <QRCodeTemplate> */}
+            <QRCodeSVG
               
               value={link}
               size={288}
+              // style={height: 1008px, width:1008px}
               bgColor={bg}
               fgColor={fg}
               level={"L"}
               includeMargin={false}
-              imageSettings={{
-                src: preview,
-                x: undefined,
-                y: undefined,
-                height: 92,
-                width: 92,
-                excavate: true,
-              }}
+              // imageSettings={{
+              //   src: preview,
+              //   x: undefined,
+              //   y: undefined,
+              //   height: 64,
+              //   width: 64,
+              //   excavate: true,
+              //   crossOrigin: anonymus
+              // }}
             />
-          </QRCodeTemplate>
+          {/* </QRCodeTemplate> */}
         {/* <div className='h-24 border-t-2 border-border rounded-b-md bg-accent -mx-3 -mb-3 mt-3'>
         </div> */}
           <div className="my-5">

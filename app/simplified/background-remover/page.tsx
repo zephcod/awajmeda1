@@ -34,37 +34,37 @@ const Guide = () => {
     const [files, setFiles] = useState<any>()
     const [imgsrc, setImgsrc] = useState<string|null>(img);
     const [isPending, startTransition] = useTransition()
-    const img2imgEndpoint = absoluteUrl("/api/img2img");
+    const bgRemoverEndpoint = absoluteUrl("/api/image/bgremover");
 
-    const form = useForm<Inputs>({
-        resolver: zodResolver(imguploadSchema),
-      })
-
+  
+    function convertFileToBase64() {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(files);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
+      }
  
-    function onSubmit(data: Inputs){
+    function onSubmit(){
       const cost = Number(5)
     startTransition(async()=>{
         try {
           const user = await appwriteAuthService.currentUser()
           if (user) {
            const uid = user!.$id
-            const reader = new FileReader()
+           
+            const upimg = await convertFileToBase64()
 
-            reader.readAsDataURL(files)
-        
-            reader.onload = () => {
-              setFiles(reader.result)
-            }
-            const res = await axios.get(`${img2imgEndpoint}`,{
+            const res = await axios.post(`${bgRemoverEndpoint}`,{
               params:{
-                image:files,
-                model:'gram',
+                image:upimg,
                 cost:cost,
                 des:uid
               }
             })
-            console.log(res)
-            const _img = res.data.image
+            // console.log(res)
+            const _img = res.data
             setImgsrc(_img)
           }
         }catch (error:any) {
@@ -77,51 +77,28 @@ const Guide = () => {
         )
     }      
 
-  async function onUpload(file:any) {
-    // const pic = document.getElementById('upper').files[0]
-    try {
-      const res = await appwriteStorageService.uploadImage(file)
-      console.log(res)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
-<div className='flex flex-col-reverse md:flex-row items-start gap-5 w-full mx-auto lg:p-8 p-3.5'>
-      <Form {...form}>
-        <form
-          className="grid gap-5 items-start w-full h-fit"
-          onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
-            
-            <FormField
-              control={form.control}
-              name="images"
-              render={({ field }) => (
-            <FormItem>
-                <Input id="images" type="file" onChange={(e)=>{setFiles(e.target.files![0])}}/>
-            </FormItem>
-              )}
+    <div className='flex flex-col-reverse md:flex-row items-start gap-5 w-full mx-auto lg:p-8 p-3.5'>
+        <FormItem>
+            <Input id="images" type="file" onChange={(e)=>{setFiles(e.target.files![0])}}/>
+        </FormItem>
+        <Button
+          onClick={()=>{onSubmit()}}
+          disabled={isPending}
+          // onClick={onSubmit}
+          >
+          {isPending && (
+            <Icons.spinner
+            className="mr-2 h-4 w-4 animate-spin"
+            aria-hidden="true"
             />
-            
-            <Button
-            disabled={isPending}
-            // onClick={onSubmit}
-            >
-            {isPending && (
-              <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
-              aria-hidden="true"
-              />
-              )}
-            Upload
-            </Button>
-        </form>
-      </Form>
-      {isPending?
-      <LoadingRouteUI2/>
-      :<Image width='500' height='200' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}
-      </div>
+            )}
+          Upload
+        </Button>
+        {isPending?
+        <LoadingRouteUI2/>
+        :<Image width='500' height='200' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}
+    </div>
   )
 }
 

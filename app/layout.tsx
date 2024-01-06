@@ -1,12 +1,14 @@
 'use client'
 import '@/styles/globals.css'
-import { GlobalNav } from '@/components/layouts/sidenav'
-import { Toaster } from "@/components/ui/toaster"
-import { Providers } from '@/components/providers'
 import React, { useState, useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AuthProvider } from '@/context/authContext'
-import appwriteAuthService from "@/db/appwrite_auth"
+import { Providers } from '@/components/providers'
 import { ModalProvider } from '@/components/layouts/modal-provider'
+import appwriteAuthService from "@/db/appwrite_auth"
+import { Toaster } from "@/components/ui/toaster"
+import { GlobalNav } from '@/components/layouts/sidenav'
 import TronHeader from '@/components/layouts/tron-header'
 
 
@@ -39,6 +41,8 @@ export default function RootLayout({
           </div>
           <ModalProvider/>
           </AuthProvider> 
+          <Analytics />
+          <SpeedInsights/>
         </Providers>
         <Toaster />
       </body>

@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import LoadingRouteUI2 from '@/components/loading/loading_route2'
 import appwriteAuthService from '@/db/appwrite_auth'
 import { AwajUser } from '@/lib/validations/user'
+import LoadingSimple from '@/components/loading/loading_simple'
 
 const Layout = ({ children }: { children: ReactNode }) =>{
     const router = useRouter()
@@ -29,7 +30,7 @@ const Layout = ({ children }: { children: ReactNode }) =>{
 
       if (loadingUser){
         return (
-          <LoadingRouteUI2/>
+          <LoadingSimple/>
         )
       }
 
