@@ -259,15 +259,14 @@ const QrCode = () => {
               fgColor={fg}
               level={"L"}
               includeMargin={false}
-              // imageSettings={{
-              //   src: preview,
-              //   x: undefined,
-              //   y: undefined,
-              //   height: 64,
-              //   width: 64,
-              //   excavate: true,
-              //   crossOrigin: anonymus
-              // }}
+              imageSettings={{
+                src: preview,
+                x: undefined,
+                y: undefined,
+                height: 64,
+                width: 64,
+                excavate: true,
+              }}
             />
           {/* </QRCodeTemplate> */}
         {/* <div className='h-24 border-t-2 border-border rounded-b-md bg-accent -mx-3 -mb-3 mt-3'>

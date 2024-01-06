@@ -10,7 +10,7 @@ export const getTextImage = async (data) => {
   encodedParams.append("width", data.width);
   encodedParams.append("model", data.model);
   
-  if (data.seed) {
+  if (data.seed==!0) {
     encodedParams.append("seed", data.seed);
   }
   if (data.negative) {

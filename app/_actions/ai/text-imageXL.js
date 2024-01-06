@@ -11,7 +11,7 @@ export const getTextImageXL = async (data) => {
   encodedParams.append("model", data.model);
   encodedParams.append("transparent_background", data.transparent);
   
-  if (data.seed) {
+  if (data.seed==!0) {
     encodedParams.append("seed", data.seed);
   }
   if (data.negative) {

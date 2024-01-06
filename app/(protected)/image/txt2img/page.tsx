@@ -71,6 +71,9 @@ export default function GenerateButton  () {
   
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
+    defaultValues: {
+      seed:0
+    },
   })
 
   function onDownload() {   
