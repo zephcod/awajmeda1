@@ -114,7 +114,9 @@ import { AwajGallery } from '@/lib/validations/gallery';
                     '650a05f49ac5d9e273b8',
                     '6584adab586c993ce254',
                     [
-                      Query.equal('user',uid)
+                      Query.equal('user',uid),
+                      Query.orderDesc('$createdAt'),
+                      Query.limit(20)
                     ]
                     ) as unknown as {documents:[AwajGallery],total:number}
                     

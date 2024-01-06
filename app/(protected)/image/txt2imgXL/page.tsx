@@ -96,12 +96,12 @@ export default function GenerateButton  () {
         if (user) {
          uid = user!.$id
 
-          if (data.modelXL='dall-e-3') {
+          if (data.modelXL==='dall-e-3') {
             try {
               const res = await axios.post(`${dalle2imgEndpoint}`,{
                 params:{
                   prompt:data.prompt,
-                  model:data.model,
+                  model:data.modelXL,
                   cost:count,
                   des:uid
                 }
@@ -114,7 +114,7 @@ export default function GenerateButton  () {
               })
             }
           }
-          else{
+          else {
          const res = await axios.post(`${txt2imgEndpointXL}`,{
            params:{
              prompt:data.prompt,
