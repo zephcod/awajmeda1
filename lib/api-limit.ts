@@ -50,7 +50,7 @@ export const checkApiLimit = async (pref:{cost:number,uid:string}) => {
   const coin = Number(prefs?.coin)
 
 
-    if (coin && coin>pref.cost){
+    if (coin && coin>=pref.cost){
         return true
     }
     else{

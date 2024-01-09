@@ -46,13 +46,13 @@ const Home = () => {
           const uid = user!.$id
             const res = await axios.post('/api/gift',{
               params:{
-                gift:50,
+                gift:100,
                 des:uid
               }
             })
             if (res.data.data===true) {
               toast.message("Congratulations!", {
-                description: `50 coins have been successfully added to your account.`,
+                description: `100 coins have been successfully added to your account.`,
               })
             }
             else{
@@ -82,7 +82,7 @@ const Home = () => {
         // interactivity={interactivity}
         />
         <div className='px-4 lg:px-8 flex flex-col items-center gap-2'>
-          <h2 className='text-center font-bold text-2xl'>🎄መልካም ገና🎄 <br /> Get your 50 Gift Coins.</h2>
+          <h2 className='text-center font-bold text-2xl'>🎄መልካም ገና🎄 <br /> Get your 100 Gift Coins.</h2>
           <Button
             className='m-4 w-48'
             onClick={()=>{onSubmit()}}
