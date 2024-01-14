@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
-import Balancer from "react-wrap-balancer"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -26,9 +25,9 @@ export function ContentTitleSection({
             {title}
           </h2>
           {description ? (
-            <Balancer className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+            <div className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
               {description}
-            </Balancer>
+            </div>
           ) : null}
         </div>
       </div>
