@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { type z } from "zod"
 import { useForm } from "react-hook-form"
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useProModal } from '@/hooks/use-pro-modal'
 import { Icons } from '@/components/icons'
 import { Form,
@@ -30,16 +30,19 @@ import appwriteAuthService from "@/db/appwrite_auth"
 import appwriteDBService from "@/db/appwrite_db"
 import appwriteStorageService from "@/db/appwrite_storage"
 import { models } from "@/config/models"
+import { controlModels } from "@/config/XLmodels"
 
 type Inputs = z.infer<typeof promptSchema>
 
-export default function ImageEditing  () {
+export default function ControlledImage  () {
+  const urlParams = useSearchParams()
+  const paramController = urlParams.get('controller') || 'canny'
   const [files, setFiles] = useState<any>()
   const [isPending, startTransition] = useTransition()
   const [imgsrc, setImgsrc] = useState<string|null>();
   const router = useRouter()
   const melaModal = useProModal()
-  const imgEditingEndpoint = absoluteUrl("/api/image/editing");
+  const imgEditingEndpoint = absoluteUrl("/api/image/controlled");
   
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
@@ -96,7 +99,8 @@ export default function ImageEditing  () {
              prompt:data.prompt,
              model:data.model,
              image:upimg,
-             image_guidance:2.2,
+             control:data.control,
+             control_scale:0.7,
              cost:cost,
              des:uid
            }
@@ -149,17 +153,52 @@ export default function ImageEditing  () {
               name="prompt"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Type your editing prompt here</FormLabel>
+                  <FormLabel>Type your prompt here</FormLabel>
                   <FormControl>
                     <Textarea
                       aria-invalid={!!form.formState.errors.prompt}
-                      placeholder="Write a short instruction describing how to edit the image. (ex: &apos;swap X by Y&apos;, &apos;add X&apos;, &apos;what would it look like if it were snowing?&apos;)"
+                      placeholder="Describe how the final image should look like..."
                       {...form.register("prompt")}
                       />
                   </FormControl>
                   <UncontrolledFormMessage
                     message={form.formState.errors.prompt?.message}
                   />
+                </FormItem>
+              )}
+            />
+            <FormField
+              // control={form.control}
+              name="control"
+              render={({ field }) => (
+                <FormItem>
+                <FormLabel>Choose the control image structure.</FormLabel>
+                <FormControl>
+                    <Select 
+                      defaultValue={paramController}
+                      // value={field.value}
+                      onValueChange={(value: typeof field.value) =>
+                      field.onChange(value)
+                    }>
+                    <SelectTrigger className="h-14">
+                        <SelectValue placeholder={field.name} defaultValue={field.value} {...form.register('control')}/>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup className="h-96">
+                          {controlModels.map((mod) => {
+                            return(
+                              <SelectItem value={mod.id} key={mod.id}>
+                                <div className="flex flex-row items-center gap-3 h-14">
+                                  <Image src={mod.image} alt="" width={72} height={72}/> {mod.title}
+                                </div>
+                              </SelectItem>
+                            )
+                          })}
+                        </SelectGroup>
+                    </SelectContent>
+                    </Select>
+                </FormControl>
+                <FormMessage />
                 </FormItem>
               )}
             />
@@ -170,7 +209,7 @@ export default function ImageEditing  () {
               name="model"
               render={({ field }) => (
                 <FormItem>
-                <FormLabel>Choose the model used to edit the image.</FormLabel>
+                <FormLabel>Choose the model used to generate image.</FormLabel>
                 <FormControl>
                     <Select 
                       defaultValue='absolute_reality_1_8_1'

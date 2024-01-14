@@ -24,7 +24,7 @@ const Simplified = () => {
     <div>
       <Header
       title="Templates from Awaj AI"
-      description="Select a template start"
+      description="Select a template to start"
       size="sm" 
       className='p-2 lg:p-6'/>
       <div className='h-4'></div>

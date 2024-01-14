@@ -54,20 +54,30 @@ export function FileDialog<TFieldValues extends FieldValues>({
   className,
   ...props
 }: FileDialogProps<TFieldValues>) {
-  const onDrop = React.useCallback(
-    (acceptedFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
-      setValue(
-        name,
-        acceptedFiles as PathValue<TFieldValues, Path<TFieldValues>>,
+  async function convertFileToBase64(conv) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(conv);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+    }
+    const onDrop = React.useCallback(
+      async (acceptedFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
+        setValue(
+          name,
+          acceptedFiles as PathValue<TFieldValues, Path<TFieldValues>>,
         {
           shouldValidate: true,
         }
-      )
-
+        )
+        
+      // const base64 = await convertFileToBase64(acceptedFiles[0].path)
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
+            filed: 'er'
           })
         )
       )
@@ -218,13 +228,22 @@ function FileCard<TFieldValues extends FieldValues>({
   const [cropData, setCropData] = React.useState<string | null>(null)
   const cropperRef = React.useRef<ReactCropperElement>(null)
 
+  function convertFileToBase64(conv) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(conv);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
+      }
+
   const onCrop = React.useCallback(() => {
     if (!files || !cropperRef.current) return
 
     const croppedCanvas = cropperRef.current?.cropper.getCroppedCanvas()
     setCropData(croppedCanvas.toDataURL())
 
-    croppedCanvas.toBlob((blob) => {
+    croppedCanvas.toBlob(async (blob) => {
       if (!blob) {
         console.error("Blob creation failed")
         return
@@ -233,10 +252,11 @@ function FileCard<TFieldValues extends FieldValues>({
         type: file.type,
         lastModified: Date.now(),
       })
-
+      // const upimg = await convertFileToBase64(croppedImage)
       const croppedFileWithPathAndPreview = Object.assign(croppedImage, {
         preview: URL.createObjectURL(croppedImage),
         path: file.name,
+        filed: blob
       }) satisfies FileWithPreview
 
       const newFiles = [...files]
@@ -258,7 +278,7 @@ function FileCard<TFieldValues extends FieldValues>({
 
   return (
     <div className="relative flex items-center justify-between gap-2.5">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-12 ">
         <Image
           src={cropData ? cropData : file.preview}
           alt={file.name}
@@ -267,9 +287,9 @@ function FileCard<TFieldValues extends FieldValues>({
           height={40}
           loading="lazy"
         />
-        <div className="flex flex-col">
-          <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
-            {file.name}
+        <div className="flex flex-col ">
+          <p className="text-sm font-medium text-muted-foreground overflow-hidden max-w-xs">
+           {file.name}
           </p>
           <p className="text-xs text-slate-500">
             {(file.size / 1024 / 1024).toFixed(2)}MB

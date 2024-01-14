@@ -101,7 +101,7 @@ if (!authStatus) {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/support">
+                      <Link href="/support">
                         <Icons.help
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"

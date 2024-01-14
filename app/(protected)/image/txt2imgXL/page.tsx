@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { type z } from "zod"
 import { useForm } from "react-hook-form"
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useProModal } from '@/hooks/use-pro-modal'
 import { Icons } from '@/components/icons'
 import { Form,
@@ -20,33 +20,27 @@ import { Input } from "@/components/ui/input";
 import { promptSchema } from "@/lib/validations/ai";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { absoluteUrl } from '@/lib/utils';
-import { img } from "./blob";
 import axios from "axios"
-import LoadingRouteUI2 from "@/components/loading/loading_route2"
 import appwriteAuthService from "@/db/appwrite_auth"
 import appwriteDBService from "@/db/appwrite_db"
 import appwriteStorageService from "@/db/appwrite_storage"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio"
 import { Slider } from "@/components/ui/slider"
-import Juggernaut from '@/public/gallery/models/juggernaut.png'
-import Dreamshaper from '@/public/gallery/models/dreamshaperXL.png'
-import SDXL from '@/public/gallery/models/SDXL.png'
-import Tshirt from '@/public/gallery/models/t-shirt-XL.png'
-import Dalle from '@/public/gallery/models/dalle.png'
 import { Toggle } from "@/components/ui/toggle"
 import { toast } from "sonner"
+import { xlModels } from "@/config/XLmodels"
 
 
 type Inputs = z.infer<typeof promptSchema>
 
 export default function GenerateButton  () {
-  
+  const urlParams = useSearchParams()
+  const paramModel = urlParams.get('model') || 'juggernautxl_1024px'
   const [isPending, startTransition] = useTransition()
-  const [imgsrc, setImgsrc] = useState<string|null>(img);
+  const [imgsrc, setImgsrc] = useState<string|null>(null);
   const [count, setCount] = useState<number>(15);
   const [height, setHeight] = useState<[number]>([1024])
   const [width, setWidth] = useState<[number]>([1024])
@@ -61,12 +55,13 @@ export default function GenerateButton  () {
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
     defaultValues: {
-      seed:0
+      seed:0,
+      model:paramModel
     },
   })
 
   function onDownload() {   
-    if (imgsrc && imgsrc !== img) {
+    if (imgsrc) {
       // Remove the data:image/png;base64, prefix if it exists
         const base64WithoutPrefix = imgsrc.replace(/^data:image\/[a-z]+;base64,/, '');
 
@@ -232,7 +227,7 @@ export default function GenerateButton  () {
                 <FormLabel>Choose the model used to generate image.</FormLabel>
                 <FormControl>
                     <Select 
-                      defaultValue='juggernautxl_1024px'
+                      defaultValue={paramModel}
                       // value={field.value}
                       onValueChange={(value: typeof field.value) =>
                       field.onChange(value)
@@ -242,31 +237,15 @@ export default function GenerateButton  () {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                        <SelectItem value="juggernautxl_1024px">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Juggernaut} alt="" width={72} height={72}/> Juggernaut XL
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="dreamshaperxl_1024px">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Dreamshaper} alt="" width={72} height={72}/> Dreamshaper XL
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="sdxl_1024px">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={SDXL} alt="" width={72} height={72}/> Stable Diffusion XL
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="dall-e-3">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Dalle} alt="" width={72} height={72}/> Dall-e 3
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="tshirtdesignredmond_1024px">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Tshirt} alt="" width={72} height={72}/> T-shirt Designer
-                          </div>
-                        </SelectItem>
+                        {xlModels.map((mod) => {
+                            return(
+                              <SelectItem value={mod.id} key={mod.id}>
+                                <div className="flex flex-row items-center gap-3 h-14">
+                                  <Image src={mod.image} alt="" width={72} height={72}/> {mod.title}
+                                </div>
+                              </SelectItem>
+                            )
+                          })}
                         </SelectGroup>
                     </SelectContent>
                     </Select>
@@ -443,19 +422,22 @@ export default function GenerateButton  () {
             
         </form>
         </Form>
-        <div className="flex-1 flex gap-3 items-center flex-col w-full">
-          {isPending?
-            <div className="flex flex-col gap-2 w-full h-[512px] items-center justify-center">
-              <Icons.spinner className="h-12 w-12 animate-spin" aria-hidden="true" />
-              <p className="animate-pulse">...generating image</p>
-            </div>
-            :<Image width='512' height='512' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}
-            {imgsrc && imgsrc !== img ?
-              <Button onClick={onDownload} className="w-48">
-                Download
-                <Icons.downlaod className="h-4 w-4 ml-2"/>
-              </Button>:''}
-        </div>
+          <div className="flex-1 flex gap-3 items-center flex-col w-full">
+              {isPending?
+                <div className="flex flex-col gap-2 w-full h-[512px] items-center justify-center">
+                  <Icons.spinner className="h-12 w-12 animate-spin" aria-hidden="true" />
+                  <p className="animate-pulse">...generating image</p>
+                </div>
+                :imgsrc ? 
+                <>
+                  <Image width='512' height='512' src={`data:image/png;base64,${imgsrc}`} alt={''}/>
+                  <Button onClick={onDownload} className="w-48">
+                    Download
+                    <Icons.downlaod className="h-4 w-4 ml-2"/>
+                  </Button>
+                </>
+                :<></>}
+          </div>
       </div>
   )
 }

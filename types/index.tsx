@@ -46,6 +46,7 @@ export interface Option {
 
 export type FileWithPreview = FileWithPath & {
   preview: string
+  filed: unknown
 }
 
 export interface StoredFile {
@@ -62,6 +63,22 @@ export interface DataTableSearchableColumn<TData> {
 export interface DataTableFilterableColumn<TData>
   extends DataTableSearchableColumn<TData> {
   options: Option[]
+}
+
+export interface Category {
+  id:string; 
+  title: string; 
+  cat:string, 
+  desc: string; 
+  icon: React.ComponentType<{ className?: string }>
+  
+}
+
+export interface Subcategory {
+  title: string
+  description?: string
+  image?: string
+  slug: string
 }
 
 export type CartItem = z.infer<typeof cartItemSchema>

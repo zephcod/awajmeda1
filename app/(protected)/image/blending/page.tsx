@@ -24,29 +24,32 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { absoluteUrl } from '@/lib/utils';
-import { img } from "./blob";
 import axios from "axios"
-import LoadingRouteUI2 from "@/components/loading/loading_route2"
 import appwriteAuthService from "@/db/appwrite_auth"
 import appwriteDBService from "@/db/appwrite_db"
 import appwriteStorageService from "@/db/appwrite_storage"
+import { models } from "@/config/models"
 
 type Inputs = z.infer<typeof promptSchema>
 
-export default function GenerateButton  () {
-  
+export default function ImageBlending  () {
+  const [files, setFiles] = useState<any>()
   const [isPending, startTransition] = useTransition()
-  const [imgsrc, setImgsrc] = useState<string|null>(img);
+  const [imgsrc, setImgsrc] = useState<string|null>();
   const router = useRouter()
   const melaModal = useProModal()
-  const dalle2imgEndpoint = absoluteUrl("/api/image/dalle");
+  const imgBlendingEndpoint = absoluteUrl("/api/image/blending");
   
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
+    defaultValues: {
+      seed:0,
+      count:1
+    },
   })
 
   function onDownload() {   
-    if (imgsrc && imgsrc !== img) {
+    if (imgsrc) {
       // Remove the data:image/png;base64, prefix if it exists
         const base64WithoutPrefix = imgsrc.replace(/^data:image\/[a-z]+;base64,/, '');
 
@@ -70,6 +73,15 @@ export default function GenerateButton  () {
     }
   }
 
+  function convertFileToBase64() {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(files);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+    }
+
   function onSubmit(data: Inputs){
     const cost = Number(data.count)*5
     startTransition(async()=>{
@@ -77,16 +89,19 @@ export default function GenerateButton  () {
         const user = await appwriteAuthService.currentUser()
         if (user) {
          const uid = user!.$id
-         const res = await axios.post(`${dalle2imgEndpoint}`,{
+         const upimg = await convertFileToBase64()
+         const res = await axios.post(`${imgBlendingEndpoint}`,{
            params:{
              prompt:data.prompt,
              model:data.model,
+             image:upimg,
+             strength:0.6,
              cost:cost,
              des:uid
            }
          })
          
-         const _img = res.data.image
+         const _img = res.data
          setImgsrc(_img)
              // Remove the data:image/png;base64, prefix if it exists
           const base64WithoutPrefix = _img.replace(/^data:image\/[a-z]+;base64,/, '');
@@ -125,9 +140,9 @@ export default function GenerateButton  () {
     <div className='flex flex-col-reverse md:flex-row items-start gap-5 w-full mx-auto lg:p-8 p-3.5'>
       <Form {...form}>
         <form
-          className="grid gap-5 items-start w-full h-fit"
+          className="flex-1 grid gap-5 items-start w-full lg:w-[800px] h-fit"
           onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
-            <div>
+            <div className="flex flex-col gap-3">
             <FormField
               control={form.control}
               name="prompt"
@@ -147,51 +162,34 @@ export default function GenerateButton  () {
                 </FormItem>
               )}
             />
-            <FormItem className="w-24">
-            <FormLabel>Count</FormLabel>
-            <FormControl>
-              <Input
-                min={1}
-                max={4}
-                defaultValue={1}
-                type="number"
-                inputMode="numeric"
-                placeholder={'1'}
-                {...form.register("count", {
-                  valueAsNumber: true,
-                })}
-              />
-            </FormControl>
-            <UncontrolledFormMessage
-              message={form.formState.errors.count?.message}
-            />
-          </FormItem>
+            <Input id="images" type="file" onChange={(e)=>{setFiles(e.target.files![0])}}/>
             </div>
             <FormField
               // control={form.control}
               name="model"
               render={({ field }) => (
                 <FormItem>
-                <FormLabel>Choose the model used to generate image.</FormLabel>
+                <FormLabel>Choose the model used to blend images.</FormLabel>
                 <FormControl>
                     <Select 
                       defaultValue='absolute_reality_1_8_1'
-                      // value={field.value}
                       onValueChange={(value: typeof field.value) =>
                       field.onChange(value)
                     }>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-14">
                         <SelectValue placeholder={field.name} defaultValue={field.value} {...form.register('model')}/>
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectGroup>
-                        <SelectItem value="absolute_reality_1_8_1">Absolute Reality</SelectItem>
-                        <SelectItem value="cyberrealistic_3_3">Cyber Realistic</SelectItem>
-                        <SelectItem value="deliberate_2">Delibrate Realistic</SelectItem>
-                        <SelectItem value="future_diffusion">Futuritic Mix</SelectItem>
-                        <SelectItem value="icbinp_seco">High-quality Realistic</SelectItem>
-                        <SelectItem value="papercut">Paper-cut Art</SelectItem>
-                        <SelectItem value="stablediffusion_2_0_512px">Stable Diffusion</SelectItem>
+                        <SelectGroup className="h-96">
+                          {models.map((mod) => {
+                            return(
+                              <SelectItem value={mod.id} key={mod.id}>
+                                <div className="flex flex-row items-center gap-3 h-14">
+                                  <Image src={mod.image} alt="" width={72} height={72}/> {mod.title}
+                                </div>
+                              </SelectItem>
+                            )
+                          })}
                         </SelectGroup>
                     </SelectContent>
                     </Select>
@@ -216,13 +214,22 @@ export default function GenerateButton  () {
             
         </form>
       </Form>
-      {imgsrc && imgsrc !== img ?
-      <Button onClick={onDownload}>
-        Download
-      </Button>:''}
-      {isPending?
-      <LoadingRouteUI2/>
-      :<Image width='500' height='200' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}
+      <div className="flex-1 flex gap-3 items-center flex-col w-full">
+          {isPending?
+            <div className="flex flex-col gap-2 w-full h-[512px] items-center justify-center">
+              <Icons.spinner className="h-12 w-12 animate-spin" aria-hidden="true" />
+              <p className="animate-pulse">...generating image</p>
+            </div>
+            :imgsrc ? 
+            <>
+              <Image width='512' height='512' src={`data:image/png;base64,${imgsrc}`} alt={''}/>
+              <Button onClick={onDownload} className="w-48">
+                Download
+                <Icons.downlaod className="h-4 w-4 ml-2"/>
+              </Button>
+            </>
+            :<></>}
+        </div>
       </div>
   )
 }

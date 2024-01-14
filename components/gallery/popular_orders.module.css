@@ -35,15 +35,13 @@
   }
 .image {
 object-fit: cover;
-border-radius: 20px;
+border-top-right-radius: 16px;
+border-top-left-radius: 16px;
     }
 .card {
     height: 350px;
     width: 400px;
     min-width: 250px;
-    padding-top: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
     border-radius: 16px;
     background: var(--card1);
     box-shadow: -1.5rem 0rem 3rem var(--btn-shadow);
@@ -154,6 +152,7 @@ border-radius: 20px;
     flex-direction: row;
     justify-content: space-evenly;
     padding: .5rem 0 .5rem;
+    border-top:2px solid var(--accent1);
     line-height: 2;
     /* margin:auto; */
 }

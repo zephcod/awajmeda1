@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { type z } from "zod"
 import { useForm } from "react-hook-form"
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useProModal } from '@/hooks/use-pro-modal'
 import { Icons } from '@/components/icons'
 import { Form,
@@ -24,42 +24,22 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { absoluteUrl } from '@/lib/utils';
-import { img } from "./blob";
 import axios from "axios"
-import LoadingRouteUI2 from "@/components/loading/loading_route2"
 import appwriteAuthService from "@/db/appwrite_auth"
 import appwriteDBService from "@/db/appwrite_db"
 import appwriteStorageService from "@/db/appwrite_storage"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio"
 import { Slider } from "@/components/ui/slider"
-import Absolute_1_6 from '@/public/gallery/models/absolute-1-6.png'
-import Absolute_1_8 from '@/public/gallery/models/absolute-1-8.png'
-import Epic from '@/public/gallery/models/epic.png'
-import Cyber from '@/public/gallery/models/cyber.png'
-import Nightmare from '@/public/gallery/models/nightmare.png'
-import Voxel from '@/public/gallery/models/voxel-art.png'
-import Paper from '@/public/gallery/models/paper-art.png'
-import Delibrate from '@/public/gallery/models/delibrate.png'
-import Icibn from '@/public/gallery/models/icbinp-realistic.png'
-import Dream from '@/public/gallery/models/dreamshaper.png'
-import Raw from '@/public/gallery/models/raw-photo.png'
-import Raw2 from '@/public/gallery/models/raw-photo-2.png'
-import DoubleExp from '@/public/gallery/models/double-exposure.png'
-import Emoji from '@/public/gallery/models/emoji.png'
-import Shirt from '@/public/gallery/models/t-shirt.png'
-import Texture from '@/public/gallery/models/texture.png'
-import VectorArt from '@/public/gallery/models/vector-art.png'
-import LowPoly from '@/public/gallery/models/low-poly.png'
-import OpenJ from '@/public/gallery/models/open-journey.png'
-import SD2_0 from '@/public/gallery/models/SD-2-0.png'
-import SD2_1 from '@/public/gallery/models/SD-2-1.png'
+import { models } from "@/config/models"
 
 type Inputs = z.infer<typeof promptSchema>
 
 export default function GenerateButton  () {
+  const urlParams = useSearchParams()
+  const paramModel = urlParams.get('model') || 'absolute_reality_1_8_1'
   
   const [isPending, startTransition] = useTransition()
-  const [imgsrc, setImgsrc] = useState<string|null>(img);
+  const [imgsrc, setImgsrc] = useState<string|null>(null);
   const [count, setCount] = useState<number>(5);
   const [height, setHeight] = useState<[number]>([512])
   const [width, setWidth] = useState<[number]>([512])
@@ -67,7 +47,7 @@ export default function GenerateButton  () {
   const [steps, setSteps] = useState<[number]>([30])
   const router = useRouter()
   const melaModal = useProModal()
-  const txt2imgEndpoint = absoluteUrl("/api/text-image");
+  const txt2imgEndpoint = absoluteUrl("/api/image/text-image");
   
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
@@ -77,7 +57,7 @@ export default function GenerateButton  () {
   })
 
   function onDownload() {   
-    if (imgsrc && imgsrc !== img) {
+    if (imgsrc ) {
       // Remove the data:image/png;base64, prefix if it exists
         const base64WithoutPrefix = imgsrc.replace(/^data:image\/[a-z]+;base64,/, '');
 
@@ -214,7 +194,7 @@ export default function GenerateButton  () {
                 <FormLabel>Choose the model used to generate image.</FormLabel>
                 <FormControl>
                     <Select 
-                      defaultValue='absolute_reality_1_8_1'
+                      defaultValue={paramModel}
                       // value={field.value}
                       onValueChange={(value: typeof field.value) =>
                       field.onChange(value)
@@ -224,111 +204,15 @@ export default function GenerateButton  () {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup className="h-96">
-                        <SelectItem value="absolute_reality_1_6">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Absolute_1_6} alt="" width={72} height={72}/> Absolute Reality 1.6
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="absolute_reality_1_8_1">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Absolute_1_8} alt="" width={72} height={72}/> Absolute Reality 1.8
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="deliberate_2">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Delibrate} alt="" width={72} height={72}/> Delibrate Realistic
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="icbinp_seco">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Icibn} alt="" width={72} height={72}/> Icbin Realistic
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="openjourney_2">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={OpenJ} alt="" width={72} height={72}/> Open Journey
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="epic_diffusion_1_1">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Epic} alt="" width={72} height={72}/> Epic Diffusion
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="realistic_vision_1_3">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Raw} alt="" width={72} height={72}/> Raw Photo
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="realistic_vision_5_1">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Raw2} alt="" width={72} height={72}/> Raw Photo 2
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="cyberrealistic_3_3">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Cyber} alt="" width={72} height={72}/> Cyber Realistic
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="stablediffusion_2_0_512px">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={SD2_0} alt="" width={72} height={72}/> Stable Diffusion 2.0
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="stablediffusion_2_1_512px">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={SD2_1} alt="" width={72} height={72}/> Stable Diffusion 2.1
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="double_exposure_diffusion">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={DoubleExp} alt="" width={72} height={72}/> Double Exposure
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="dreamshaper_8">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Dream} alt="" width={72} height={72}/> Dreamshaper Cartoon
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="nightmareshaper">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Nightmare} alt="" width={72} height={72}/> Nightmare Shaper
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="papercut">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Paper} alt="" width={72} height={72}/> Paper-cut Art
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="emoji_diffusion">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Emoji} alt="" width={72} height={72}/> Emojis
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="stable_diffusion_voxelart">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Voxel} alt="" width={72} height={72}/> Voxel Art
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="lowpoly_world">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={LowPoly} alt="" width={72} height={72}/> Lowpoly World
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="tshirt_diffusion">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Shirt} alt="" width={72} height={72}/> T-shirt Design
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="vectorartz_diffusion">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={VectorArt} alt="" width={72} height={72}/> Vector Art
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="texture_diffusion">
-                          <div className="flex flex-row items-center gap-3 h-14">
-                            <Image src={Texture} alt="" width={72} height={72}/> Texture / Pattern
-                          </div>
-                        </SelectItem>
+                          {models.map((mod) => {
+                            return(
+                              <SelectItem value={mod.id} key={mod.id}>
+                                <div className="flex flex-row items-center gap-3 h-14">
+                                  <Image src={mod.image} alt="" width={72} height={72}/> {mod.title}
+                                </div>
+                              </SelectItem>
+                            )
+                          })}
                         </SelectGroup>
                     </SelectContent>
                     </Select>
@@ -505,18 +389,21 @@ export default function GenerateButton  () {
             
         </form>
         </Form>
-        <div className="flex-1 flex gap-3 items-center flex-col w-full">
+      <div className="flex-1 flex gap-3 items-center flex-col w-full">
           {isPending?
             <div className="flex flex-col gap-2 w-full h-[512px] items-center justify-center">
               <Icons.spinner className="h-12 w-12 animate-spin" aria-hidden="true" />
               <p className="animate-pulse">...generating image</p>
             </div>
-            :<Image width='512' height='512' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}
-            {imgsrc && imgsrc !== img ?
+            :imgsrc ? 
+            <>
+              <Image width='512' height='512' src={`data:image/png;base64,${imgsrc}`} alt={''}/>
               <Button onClick={onDownload} className="w-48">
                 Download
                 <Icons.downlaod className="h-4 w-4 ml-2"/>
-              </Button>:''}
+              </Button>
+            </>
+            :<></>}
         </div>
       </div>
   )

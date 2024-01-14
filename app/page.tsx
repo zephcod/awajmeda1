@@ -3,19 +3,22 @@ import MiniGallery from '@/components/gallery/popular_orders'
 import { Icons } from '@/components/icons'
 import React, { useTransition } from 'react'
 import Lottie from "lottie-react"
-import img from '@/public/blob/startup.json'
+import img from '@/public/blob/awajai-rocket.json'
 import Simplified from '@/components/landing/simple'
 import { Button } from '@/components/ui/button'
 import appwriteAuthService from '@/db/appwrite_auth'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { Separator } from '@/components/ui/separator'
+import { Badge } from '@/components/ui/badge'
+import AwajLearning from '@/components/landing/learning'
 
 const style = {
-  height: 300,
+  height: 200,
 };
 const interactivity = {
-  mode: "scroll",
+  mode: "cursor",
+  
   actions: [
     {
       visibility: [0, 0.2],
@@ -29,7 +32,7 @@ const interactivity = {
     },
     {
       visibility: [0.45, 1.0],
-      type: "loop",
+      type: 'loop',
       frames: [45, 60],
     },
   ],
@@ -75,15 +78,13 @@ const Home = () => {
 
   return (
     <div className='relative w-full m-auto'>
-      <div className=''>
-        <Lottie
-        animationData={img}
-        style={style}
-        // interactivity={interactivity}
-        />
-        <div className='px-4 lg:px-8 flex flex-col items-center gap-2'>
-          <h2 className='text-center font-bold text-2xl'>🎄መልካም ገና🎄 <br /> Get your 100 Gift Coins.</h2>
+      <>
+        <div className='px-4 lg:px-8 flex flex-col items-center gap-2 mt-6 max-w-2xl mx-auto'>
+          <h2 className='text-center font-bold text-2xl md:text-4xl'>✨ Welcome ✨ <br /> To the forefront of AI Exploration </h2>
+          <p className='text-center text-muted-foreground max-w-lg'> We serve creatives and marketers to explore 
+            the vast potential of AI with our flexible Pay-As-You-Go model.</p>
           <Button
+            variant={'default'}
             className='m-4 w-48'
             onClick={()=>{onSubmit()}}
             disabled={isPending}
@@ -95,14 +96,25 @@ const Home = () => {
               aria-hidden="true"
               />
               )}
-            Claim Gift
+            Claim 100 Gift Coins
+          <span className="relative flex h-3 w-3 ml-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-100"></span>
+          </span>
           </Button>
-          <Separator/>
         </div>
+        <Lottie
+        animationData={img}
+        style={style}
+        // interactivity={interactivity}
+        />
+        <Separator/>
         <Simplified/>
         <Icons.add className=" m-auto h-24 w-24 text-muted-foreground"/>
         <MiniGallery/>
-      </div>
+        <Separator/>
+        <AwajLearning/>
+      </>
     </div>
   )
 }

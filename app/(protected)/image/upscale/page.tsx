@@ -2,16 +2,9 @@
 import appwriteStorageService from '@/db/appwrite_storage'
 import { useState, useTransition } from 'react'
 import Image from "next/image"
-import { useRouter } from 'next/navigation'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { type z } from "zod"
-import { useForm } from "react-hook-form"
 import { Button } from '@/components/ui/button'
-import { FileDialog } from '@/components/file-dialog'
-import { FileWithPreview } from '@/types'
 import { Input } from '@/components/ui/input'
 import { Icons } from '@/components/icons'
-import { imguploadSchema } from "@/lib/validations/ai";
 import { Form,
           FormControl,
           FormField,
@@ -20,23 +13,44 @@ import { Form,
           FormMessage,
           UncontrolledFormMessage, 
         } from '@/components/ui/form';
-import { getImg2Img } from '@/app/_actions/ai/image-image'
 import LoadingRouteUI2 from '@/components/loading/loading_route2'
-import { img } from '@/public/blob/blob'
 import axios from 'axios'
 import { absoluteUrl } from '@/lib/utils'
 import appwriteAuthService from '@/db/appwrite_auth'
 
 
-type Inputs = z.infer<typeof imguploadSchema>
-
-const Guide = () => {
+const Upscale = () => {
     const [files, setFiles] = useState<any>()
-    const [imgsrc, setImgsrc] = useState<string|null>(img);
+    const [imgsrc, setImgsrc] = useState<string|null>(null);
     const [isPending, startTransition] = useTransition()
-    const bgRemoverEndpoint = absoluteUrl("/api/image/bgremover");
+    const upscaleEndpoint = absoluteUrl("/api/image/upscale");
 
   
+    function onDownload() {   
+      if (imgsrc) {
+        // Remove the data:image/png;base64, prefix if it exists
+          const base64WithoutPrefix = imgsrc.replace(/^data:image\/[a-z]+;base64,/, '');
+  
+          // Decode base64 string
+          const decodedData = atob(base64WithoutPrefix);
+  
+          // Create a Uint8Array from the decoded data
+          const uint8Array = new Uint8Array(decodedData.length);
+          for (let i = 0; i < decodedData.length; i++) {
+            uint8Array[i] = decodedData.charCodeAt(i);
+          }
+        const blob = new Blob([uint8Array], { type: 'image/png' });
+          const url = URL.createObjectURL(blob)
+         const link = document.createElement('a');
+         link.href = url;
+         link.download = 'image.png';
+         document.body.appendChild(link);
+         link.click();
+         document.body.removeChild(link);
+         URL.revokeObjectURL(url);
+      }
+    }
+
     function convertFileToBase64() {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -56,12 +70,13 @@ const Guide = () => {
            
             const upimg = await convertFileToBase64()
 
-            const res = await axios.post(`${bgRemoverEndpoint}`,{
+            const res = await axios.post(`${upscaleEndpoint}`,{
               params:{
                 image:upimg,
                 cost:cost,
                 des:uid
-              }
+              },
+              
             })
             // console.log(res)
             const _img = res.data
@@ -79,6 +94,7 @@ const Guide = () => {
 
   return (
     <div className='flex flex-col-reverse md:flex-row items-start gap-5 w-full mx-auto lg:p-8 p-3.5'>
+      <div className='flex flex-1 flex-col items-center w-full gap-3'>
         <FormItem>
             <Input id="images" type="file" onChange={(e)=>{setFiles(e.target.files![0])}}/>
         </FormItem>
@@ -93,13 +109,28 @@ const Guide = () => {
             aria-hidden="true"
             />
             )}
-          Upload
+          Upscale Image
         </Button>
-        {isPending?
-        <LoadingRouteUI2/>
-        :<Image width='500' height='200' src={`data:image/png;base64,${imgsrc}`} alt={''}/>}
+      </div>
+        
+      <div className="flex-1 flex gap-3 items-center flex-col w-full">
+          {isPending?
+            <div className="flex flex-col gap-2 w-full h-[512px] items-center justify-center">
+              <Icons.spinner className="h-12 w-12 animate-spin" aria-hidden="true" />
+              <p className="animate-pulse">...generating image</p>
+            </div>
+            :imgsrc ? 
+            <>
+              <Image width='512' height='512' src={`data:image/png;base64,${imgsrc}`} alt={''}/>
+              <Button onClick={onDownload} className="w-48">
+                Download
+                <Icons.downlaod className="h-4 w-4 ml-2"/>
+              </Button>
+            </>
+            :<></>}
+        </div>
     </div>
   )
 }
 
-export default Guide
+export default Upscale

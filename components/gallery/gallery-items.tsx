@@ -56,9 +56,9 @@ export function GalItems () {
                   </div>
                 )}
               </AspectRatio>
-                <div className="absolute bottom-0 px-2 py-4 w-full bg-gradient-to-b from-transparent to-primary">
-                    <div className='flex flex-row justify-between items-end font-normal text-base h-12 overflow-hidden text-gray-900'>
-                        {item.prompt}
+                <div className="absolute bottom-0 px-2 py-4 w-full bg-gradient-to-b from-transparent to-card">
+                    <div className='flex flex-row justify-end items-start font-normal text-base h-6 overflow-hidden '>
+                      <p className='p-0 text-end'>{item.prompt}</p>
                     </div>
                 </div>
             </CardHeader>
