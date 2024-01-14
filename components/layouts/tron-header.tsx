@@ -45,7 +45,7 @@ const TronHeader = () => {
                 </DialogContent>
             </Dialog>
         </div>
-        </div>
+    </div>
     </div>
   )
 }

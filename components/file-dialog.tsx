@@ -54,30 +54,20 @@ export function FileDialog<TFieldValues extends FieldValues>({
   className,
   ...props
 }: FileDialogProps<TFieldValues>) {
-  async function convertFileToBase64(conv) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(conv);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-    });
-    }
-    const onDrop = React.useCallback(
-      async (acceptedFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
-        setValue(
-          name,
-          acceptedFiles as PathValue<TFieldValues, Path<TFieldValues>>,
+  const onDrop = React.useCallback(
+    (acceptedFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
+      setValue(
+        name,
+        acceptedFiles as PathValue<TFieldValues, Path<TFieldValues>>,
         {
           shouldValidate: true,
         }
-        )
-        
-      // const base64 = await convertFileToBase64(acceptedFiles[0].path)
+      )
+
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-            filed: 'er'
           })
         )
       )
@@ -117,14 +107,21 @@ export function FileDialog<TFieldValues extends FieldValues>({
   }, [])
 
   return (
-      <div className="sm:max-w-[480px] bg-card">
-        <p className="relative text-base font-medium text-muted-foreground">
-          Upload here 
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" disabled={disabled}>
+          Upload Images
+          <span className="sr-only">Upload Images</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[480px]">
+        <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
+          Upload your images
         </p>
         <div
           {...getRootProps()}
           className={cn(
-            "group relative mt-4 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
+            "group relative mt-8 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
             "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             isDragActive && "border-muted-foreground/50",
             disabled && "pointer-events-none opacity-60",
@@ -155,7 +152,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
                 aria-hidden="true"
               />
               <p className="mt-2 text-base font-medium text-muted-foreground">
-                Drag and drop file here, or click to select file
+                Drag {`'n'`} drop file here, or click to select file
               </p>
               <p className="text-sm text-slate-500">
                 Please upload file with size less than {formatBytes(maxSize)}
@@ -203,7 +200,8 @@ export function FileDialog<TFieldValues extends FieldValues>({
             <span className="sr-only">Remove All</span>
           </Button>
         ) : null}
-      </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -228,22 +226,13 @@ function FileCard<TFieldValues extends FieldValues>({
   const [cropData, setCropData] = React.useState<string | null>(null)
   const cropperRef = React.useRef<ReactCropperElement>(null)
 
-  function convertFileToBase64(conv) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(conv);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-      });
-      }
-
   const onCrop = React.useCallback(() => {
     if (!files || !cropperRef.current) return
 
     const croppedCanvas = cropperRef.current?.cropper.getCroppedCanvas()
     setCropData(croppedCanvas.toDataURL())
 
-    croppedCanvas.toBlob(async (blob) => {
+    croppedCanvas.toBlob((blob) => {
       if (!blob) {
         console.error("Blob creation failed")
         return
@@ -252,11 +241,10 @@ function FileCard<TFieldValues extends FieldValues>({
         type: file.type,
         lastModified: Date.now(),
       })
-      // const upimg = await convertFileToBase64(croppedImage)
+
       const croppedFileWithPathAndPreview = Object.assign(croppedImage, {
         preview: URL.createObjectURL(croppedImage),
         path: file.name,
-        filed: blob
       }) satisfies FileWithPreview
 
       const newFiles = [...files]
@@ -278,7 +266,7 @@ function FileCard<TFieldValues extends FieldValues>({
 
   return (
     <div className="relative flex items-center justify-between gap-2.5">
-      <div className="flex items-center gap-2 w-12 ">
+      <div className="flex items-center gap-2">
         <Image
           src={cropData ? cropData : file.preview}
           alt={file.name}
@@ -287,9 +275,9 @@ function FileCard<TFieldValues extends FieldValues>({
           height={40}
           loading="lazy"
         />
-        <div className="flex flex-col ">
-          <p className="text-sm font-medium text-muted-foreground overflow-hidden max-w-xs">
-           {file.name}
+        <div className="flex flex-col">
+          <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
+            {file.name}
           </p>
           <p className="text-xs text-slate-500">
             {(file.size / 1024 / 1024).toFixed(2)}MB

@@ -19,10 +19,6 @@ interface ArticleCardrProps {
 function ArticleCard (props:ArticleCardrProps) {
   return (
     <article className={styles.card}>
-    {/* <header className={styles.card_header}>
-      <p>17 Orders this week</p>
-      <h2>{props.title}</h2>
-    </header> */}
     <div className={styles.imgContainer}>
       <Image
           src={props.img}
@@ -32,10 +28,6 @@ function ArticleCard (props:ArticleCardrProps) {
           className={styles.image}
           />
     </div>
-      {/* <div className={styles.price}>
-        <div className={styles.author_name_prefix}>Starting from</div>
-        {props.price}
-      </div> */}
     <div className={styles.tags}>
       <Link href="/image/pre-configured">Try Similar</Link>
       <Link href="/gallery/members">See Detail</Link>
@@ -94,11 +86,6 @@ const MiniGallery = () => {
             title='Portriat'
             price='1,500ETB'
             img={Pre9.src}/>
-          {/* <ArticleCard
-            id={10}
-            title='Twitter'
-            price='1,500ETB'
-            img={Twitter.src}/> */}
       </section>
         <div className='absolute my-auto bottom-1'>
           <Link href={'/gallery/members'} className="relative group mt-20 sm:mt-0 rounded-full flex items-center justify-center mx-auto text-primary-foreground dark:text-secondary text-lg font-light py-2 px-6 transition-all">

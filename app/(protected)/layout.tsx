@@ -41,7 +41,7 @@ const Layout = ({ children }: { children: ReactNode }) =>{
     if (!user) {
       return (
         <div className='w-full pt-12 mx-auto flex flex-col items-center justify-start'>
-          <Image width='60' height='60' src={logo} alt={''}/>
+         <Image width='60' height='60' src={logo} alt={''}/>
           <p className='font-bold text-lg'>Authentication required</p>
           <p className='p text-muted-foreground'>Make sure you are connected to the internet and sign in to continue.</p>
           <div className='flex flex-row gap-3 mt-6'>

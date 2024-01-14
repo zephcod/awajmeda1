@@ -2,7 +2,7 @@
 import MiniGallery from '@/components/gallery/popular_orders'
 import { Icons } from '@/components/icons'
 import React, { useTransition } from 'react'
-// import Lottie from "lottie-react"
+import Lottie from "lottie-react"
 import img from '@/public/blob/awajai-rocket.json'
 import Simplified from '@/components/landing/simple'
 import { Button } from '@/components/ui/button'
@@ -17,7 +17,7 @@ const style = {
   height: 200,
 };
 const interactivity = {
-  mode: "cursor",
+  mode: "scroll",
   
   actions: [
     {
@@ -32,7 +32,7 @@ const interactivity = {
     },
     {
       visibility: [0.45, 1.0],
-      type: 'loop',
+      type: "loop",
       frames: [45, 60],
     },
   ],
@@ -88,7 +88,6 @@ const Home = () => {
             className='m-4 w-48'
             onClick={()=>{onSubmit()}}
             disabled={isPending}
-            // onClick={onSubmit}
             >
             {isPending && (
               <Icons.spinner
@@ -97,17 +96,12 @@ const Home = () => {
               />
               )}
             Claim 100 Gift Coins
-          {/* <span className="relative flex h-3 w-3 ml-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-100"></span>
-          </span> */}
           </Button>
         </div>
-        {/* <Lottie
+        <Lottie
         animationData={img}
         style={style}
-        // interactivity={interactivity}
-        /> */}
+        />
         <Separator/>
         <Simplified/>
         <Icons.add className=" m-auto h-24 w-24 text-muted-foreground"/>

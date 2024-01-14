@@ -151,7 +151,7 @@ export default function ControlledImage  () {
     <div className='flex flex-col-reverse md:flex-row items-start gap-5 w-full mx-auto lg:p-8 p-3.5'>
       <Form {...form}>
         <form
-          className="flex-1 grid gap-5 items-start w-full lg:w-[800px] h-fit"
+          className="flex-1 grid gap-5 items-start w-full h-fit"
           onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
             <div className="flex flex-col gap-3">
             <FormField

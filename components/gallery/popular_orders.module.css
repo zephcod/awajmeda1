@@ -154,7 +154,6 @@ border-top-left-radius: 16px;
     padding: .5rem 0 .5rem;
     border-top:2px solid var(--accent1);
     line-height: 2;
-    /* margin:auto; */
 }
 
 .tags a {

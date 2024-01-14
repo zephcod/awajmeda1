@@ -109,7 +109,6 @@ const GenerativeModels = () => {
                 <CardTitle >
                   <div className='flex flex-row justify-between items-center font-normal text-base'>
                     {ind.title}
-                    {/* <InfoDropdown/> */}
                   </div>
                 </CardTitle>
               </CardContent>
@@ -160,7 +159,6 @@ const GenerativeModels = () => {
                 <CardTitle >
                   <div className='flex flex-row justify-between items-center font-normal text-base'>
                     {ind.title}
-                    {/* <InfoDropdown/> */}
                   </div>
                 </CardTitle>
               </CardContent>
@@ -211,7 +209,6 @@ const GenerativeModels = () => {
                 <CardTitle >
                   <div className='flex flex-row justify-between items-center font-normal text-base'>
                     {ind.title}
-                    {/* <InfoDropdown/> */}
                   </div>
                 </CardTitle>
               </CardContent>
