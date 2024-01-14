@@ -2,7 +2,7 @@
 import MiniGallery from '@/components/gallery/popular_orders'
 import { Icons } from '@/components/icons'
 import React, { useTransition } from 'react'
-import Lottie from "lottie-react"
+// import Lottie from "lottie-react"
 import img from '@/public/blob/awajai-rocket.json'
 import Simplified from '@/components/landing/simple'
 import { Button } from '@/components/ui/button'
@@ -103,11 +103,11 @@ const Home = () => {
           </span>
           </Button>
         </div>
-        <Lottie
+        {/* <Lottie
         animationData={img}
         style={style}
         // interactivity={interactivity}
-        />
+        /> */}
         <Separator/>
         <Simplified/>
         <Icons.add className=" m-auto h-24 w-24 text-muted-foreground"/>
