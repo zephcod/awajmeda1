@@ -12,6 +12,7 @@ import Pre8 from '@/public/gallery/pre-conf/8.png'
 import Pre9 from '@/public/gallery/pre-conf/9.png'
 import Link from 'next/link';
 import ExpandingArrow from '../expanding_arrow';
+import { ContentSection } from '../shells/content-section';
 
 interface ArticleCardrProps {
   id: number; title:string; price:string; img:string;
@@ -39,6 +40,16 @@ function ArticleCard (props:ArticleCardrProps) {
 
 const MiniGallery = () => {
   return (
+    <ContentSection
+        id="gallery"
+        aria-labelledby="featured-products-heading"
+        title="Digital Art Gallery"
+        description="Browse exceptional prompting and generative results from Awaj AI."
+        href="/gallery"
+        linkText="View main gallery"
+        className="mb-12 pt-8 md:pt-10 lg:pt-12 mx-auto px-8 md:px-8"
+      >
+      
     <div className={styles.container}>
     <section className={styles.card_list}>
           <ArticleCard
@@ -87,13 +98,8 @@ const MiniGallery = () => {
             price='1,500ETB'
             img={Pre9.src}/>
       </section>
-        <div className='absolute my-auto bottom-1'>
-          <Link href={'/gallery/members'} className="relative group mt-20 sm:mt-0 rounded-full flex items-center justify-center mx-auto text-primary-foreground dark:text-secondary text-lg font-light py-2 px-6 transition-all">
-            <p>Check more from gallery...</p>
-          <ExpandingArrow/>
-          </Link>
-        </div>
       </div>
+    </ContentSection>
   )
 }
 

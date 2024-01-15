@@ -1,0 +1,296 @@
+  /*Deals Carousel Style*/
+  .containerMain{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 24px;
+}
+  .modal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* width: 100%; */
+    border-radius: 10px;
+    border:0.1rem solid var(--border1);
+    background-color: var(--background);
+    /* background-clip: padding-box; */
+    box-shadow: 0px 10px 10px rgb(0, 0, 0, .1);
+    padding: 32px;
+    margin: 10px;
+    @apply
+    gap-4
+
+  }@media only  screen  and (max-width: 1024px){
+    .modal {
+      display:flex;
+      flex-direction: column;
+      margin: 10px;
+      padding: 12px;
+    }
+      }
+  .canvas {
+    /* content: ''; */
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+    flex-direction: column;
+    border-width: 1px;
+    border-color: var(--card1);
+    box-shadow: inset 5px 5px 5px var(--shadow),
+                inset -15px -15px 15px var(--glow),
+                5px 5px 5px var(--shadow),
+                -15px -15px 15px var(--glow);
+    border-radius: 15px;
+  }
+  @media only  screen  and (max-width: 1024px){
+    .canvas {
+      width: 85vw;
+      box-shadow: inset 3px 3px 3px var(--shadow),
+                  inset -5px -5px 5px var(--glow),
+                  3px 3px 3px var(--shadow),
+                  -5px -5px 5px var(--glow);
+    }
+
+
+  .round {
+      height: 3rem;
+      width: 3rem;
+  }  
+  .round::before {
+      height: 3.25rem;
+      width: 3.25rem;
+    }
+    }
+  .btncanvas {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content:baseline;
+    width: 100%;
+    /* height: 160px; */
+    margin: 0;
+  }
+  .btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .round {
+    position: relative;
+    height: 5rem;
+    width: 5rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-width: 4px;
+    border-color: var(--btn-border);
+    background: var(--btn-bg);
+    box-shadow: inset 2px 2px 0px var(--btn-glow),
+                inset -2px -2px 0px var(--btn-shadow);
+    border-radius: 50%;
+    outline: none;
+    color: var(--accent1);
+    transition: .5s;
+  }
+  @media only  screen  and (max-width: 1024px){
+    .round {
+        height: 3rem;
+        width: 3rem;
+        border-width: 2px;
+    } 
+
+      }
+  .round:hover {
+    color: var(--accent2);
+    background: var(--btn-bg);
+    box-shadow: inset 1px 1px 1px var(--btn-glow),
+                inset -2px -2px 0px var(--btn-shadow);
+    
+  }
+  .round span{
+    position: relative;
+    margin: auto;
+    font-size: 1.75rem;   
+  }
+  @media only  screen  and (max-width: 1024px){
+    .round span{
+        font-size: 1.05rem;   
+      }
+      }
+  .round::before {
+    position: absolute;
+    content: '';
+    height: 5.25rem;
+    width: 5.25rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-width: 4px;
+    border-color: var(--btn-border2);
+    background: var(--btn-bg2);
+    box-shadow: 11px 11px 22px var(--btn-shadow2),
+                -11px -11px 22px var(--btn-glow2);
+    border-radius: inherit;
+    z-index: -1;
+  }
+  @media only  screen  and (max-width: 1024px){
+    .round::before {
+        height: 3.25rem;
+        width: 3.25rem;
+        box-shadow: 3px 3px 5px var(--btn-shadow2),
+                    -3px -3px 5px var(--btn-glow2);
+      }
+      }
+
+
+  .feature {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    @apply
+    relative
+    /* w-60 */
+    mx-6
+    md:w-96
+    flex-auto
+    items-center lg:items-start
+    text-muted-foreground
+  }
+
+
+  /*Deals Card*/
+
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card_list {
+    width: 100%;
+    display: flex;
+    padding: 40px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    overflow-x: scroll;
+}
+
+.card_list::-webkit-scrollbar {
+    display: contents;
+    width: 10px;
+    height: 10px;
+}
+.card_list::-webkit-scrollbar-thumb {
+    background: var(--card);
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 2px hsla(0,0%,100%,.25), inset -2px -2px 2px rgba(0,0,0,.25);
+}
+
+.card_list::-webkit-scrollbar-track {
+    background: var(--transparent-glass)
+}
+
+.imgContainer {
+    flex: 1;
+    position: relative;
+  }
+.image {
+object-fit: contain;
+    }
+.card {
+    height: 100px;
+    width: 250px;
+    min-width: 200px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: var(--card1);
+    border-color: var(--border1);
+    border-width: 1px;
+    box-shadow: -0.1rem 0rem 2rem var(--btn-shadow);
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-content: center;
+    transition: .2s;
+    margin: 0;
+    scroll-snap-align: start;
+    clear: both;
+    position: relative;
+}
+
+.card:focus-within~.card, .card:hover~.card {
+    transform: translateX(100px);
+}
+
+.card:hover {
+    transform: translateY(-1rem);
+    cursor: pointer;
+}
+.card:not(:first-child) {
+    margin-left: -100px;
+}
+
+
+.author_avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    filter: grayscale(100%);
+    display: block;
+    overflow: hidden;
+    margin: 16px 10px;
+}
+
+.price {
+    text-align: end;
+    font-size: 20px;
+    grid-area: auto;
+    box-sizing: border-box;
+}
+
+.author_name_prefix {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--accent1);
+}
+
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: .5rem 0 .5rem;
+    line-height: 2;
+    /* margin:auto; */
+}
+
+.tags a {
+    font-style: normal;
+    font-weight: 700;
+    font-size: .5rem;
+    color: #7a7a8c;
+    text-transform: uppercase;
+    font-size: .66rem;
+    border: 2px solid var(--border1);
+    border-radius: 2rem;
+    padding: .2rem .85rem .25rem;
+    position: relative;
+}
+
+.tags a:hover {
+    background: var(--btn-bg-color);
+    text-shadow: none;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-box-decoration-break: clone;
+    background-clip: text;
+    border-color: var(--accent1);
+}

@@ -12,6 +12,7 @@ import { LucideIcon,
   VideoIcon,
   Code,
   Crop,
+  Tv2,
   Image,
   ImagePlus,
   ImageMinus,
@@ -37,8 +38,14 @@ export type Item = {
 
 export const demos: { name: string; items: Item[] }[] = [
   {
-    name: 'Simplified',
+    name: 'Quick Access',
     items: [
+      {
+        name: 'Home',
+        slug: '',
+        description: 'Organize routes without affecting URL paths',
+        icon: Tv2,
+      },
       {
         name: 'Chat',
         slug: 'chat',
@@ -47,13 +54,13 @@ export const demos: { name: string; items: Item[] }[] = [
       },
       {
         name: 'Templates',
-        slug: 'simplified',
+        slug: 'template',
         description: 'Create UI that is shared across routes',
         icon: HeartIcon,
       },
       {
         name: 'QR Code',
-        slug: 'simplified/qr-code',
+        slug: 'template/qr-code',
         description: 'Render multiple pages in the same layout',
         icon: QrCode,
       },
@@ -112,50 +119,50 @@ export const demos: { name: string; items: Item[] }[] = [
       },
     ],
   },
-  {
-    name: 'Audio Generation',
-    items: [
-      {
-        name: 'Narration / text to audio',
-        slug: 'audio/narration',
-        description:'Pass context between Client Components that cross Server/Client Component boundary',
-        icon: Headphones,
-      },
-      {
-        name: 'Dictaction / speech to text',
-        slug: 'audio/dictation',
-        description:'Pass context between Client Components that cross Server/Client Component boundary',
-        icon: Edit3,
-      },
-      {
-        name: 'Music Generation',
-        slug: 'audio/music',
-        description:'Pass context between Client Components that cross Server/Client Component boundary',
-        icon: Music,
-      },
-    ],
-  },
-  {
-    name: 'Experimental 🚨',
-    items: [
-      {
-        name: 'Copywrite',
-        slug: 'experimental/copywrite',
-        description: 'Preview the routing hooks available in Client Components',
-        icon: Edit,
-      },
-      {
-        name: 'Translation',
-        slug: 'experimental/translation',
-        description: 'Preview the supported styling solutions',
-        icon: Languages,
-      },
-      {
-        name: 'Code',
-        slug: 'experimental/code',
-        description: 'A collection of useful App Router code snippets',
-        icon: Code2,
-      },
-    ],
-  },
+  // {
+  //   name: 'Audio Generation',
+  //   items: [
+  //     {
+  //       name: 'Narration / text to audio',
+  //       slug: 'audio/narration',
+  //       description:'Pass context between Client Components that cross Server/Client Component boundary',
+  //       icon: Headphones,
+  //     },
+  //     {
+  //       name: 'Dictaction / speech to text',
+  //       slug: 'audio/dictation',
+  //       description:'Pass context between Client Components that cross Server/Client Component boundary',
+  //       icon: Edit3,
+  //     },
+  //     {
+  //       name: 'Music Generation',
+  //       slug: 'audio/music',
+  //       description:'Pass context between Client Components that cross Server/Client Component boundary',
+  //       icon: Music,
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: 'Experimental 🚨',
+  //   items: [
+  //     {
+  //       name: 'Copywrite',
+  //       slug: 'experimental/copywrite',
+  //       description: 'Preview the routing hooks available in Client Components',
+  //       icon: Edit,
+  //     },
+  //     {
+  //       name: 'Translation',
+  //       slug: 'experimental/translation',
+  //       description: 'Preview the supported styling solutions',
+  //       icon: Languages,
+  //     },
+  //     {
+  //       name: 'Code',
+  //       slug: 'experimental/code',
+  //       description: 'A collection of useful App Router code snippets',
+  //       icon: Code2,
+  //     },
+  //   ],
+  // },
 ];

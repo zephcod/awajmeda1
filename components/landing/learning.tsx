@@ -12,7 +12,7 @@ const AwajLearning = () => {
         description="Discover educational guides provided by Awaj AI."
         href="/guide"
         linkText="View all guides"
-        className="mb-12 pt-8 md:pt-10 lg:pt-12 max-w-6xl mx-auto p-4 md:p-0"
+        className="mb-12 pt-8 md:pt-10 lg:pt-12 mx-auto px-8 md:px-8"
       >
       <section
           id="categories"

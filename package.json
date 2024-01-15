@@ -45,6 +45,7 @@
     "concat-stream": "^2.0.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
+    "embla-carousel-react": "^8.0.0-rc11",
     "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
     "into-stream": "^8.0.1",

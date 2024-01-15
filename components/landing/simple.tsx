@@ -18,22 +18,24 @@ import { Header } from '@/components/header'
 import { AspectRatio } from '@/components/ui/aspect_ratio'
 import { Icons } from '@/components/icons'
 import { Button } from '@/components/ui/button'
+import { ContentSection } from '../shells/content-section'
 
 const Simplified = () => {
   return (
-    <div>
-      <Header
-      title="Templates from Awaj AI"
-      description="Select a template to start"
-      size="sm" 
-      className='p-2 lg:p-6'/>
-      <div className='h-4'></div>
+    <ContentSection
+        id="templates"
+        aria-labelledby="templates"
+        title="Latest Templates"
+        description="Select a template to start."
+        href="/template"
+        linkText="View all templates"
+        className="mb-12 pt-8 md:pt-10 lg:pt-12 mx-auto px-8 md:px-8"
+      >
       <div className='grid gap-4 grid-rows-1 lg:grid-cols-5 lg:grid-rows-2 px-2 lg:px-6'>
         {simplifieds.map((ind, indIndex) => (
           <Card key={indIndex} className='h-full overflow-hidden rounded-lg bg-border ring-1 ring-border border-none shadow-sm hover:shadow-lg'>
             <CardHeader className="border-b border-border p-0">
               <AspectRatio ratio={4 / 3}>
-                {ind?.image? (
                   <Image
                     src={
                       ind.image ?? "/images/product-placeholder.webp"
@@ -44,19 +46,6 @@ const Simplified = () => {
                     className="object-cover"
                     loading="lazy"
                   />
-                ) : (
-                  <div
-                    aria-label="Placeholder"
-                    role="img"
-                    aria-roledescription="placeholder"
-                    className="flex h-full w-full items-center justify-center bg-secondary"
-                  >
-                    <Icons.placeholder
-                      className="h-9 w-9 text-muted-foreground"
-                      aria-hidden="true"
-                    />
-                  </div>
-                )}
               </AspectRatio>
             </CardHeader>
             <CardContent className="py-2 px-3">
@@ -70,7 +59,7 @@ const Simplified = () => {
           </Card>
         ))}
       </div>
-    </div>
+    </ContentSection>
   )
 }
 
