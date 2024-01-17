@@ -28,7 +28,8 @@ import { LucideIcon,
   Languages,
   Edit3,
   ImageDown,
-  QrCode,} from "lucide-react";
+  QrCode,
+  BookA,} from "lucide-react";
 export type Item = {
   name: string;
   slug: string;
@@ -57,6 +58,12 @@ export const demos: { name: string; items: Item[] }[] = [
         slug: 'template',
         description: 'Create UI that is shared across routes',
         icon: HeartIcon,
+      },
+      {
+        name: 'Guides',
+        slug: 'guide',
+        description: 'Render multiple pages in the same layout',
+        icon: BookA,
       },
       {
         name: 'QR Code',

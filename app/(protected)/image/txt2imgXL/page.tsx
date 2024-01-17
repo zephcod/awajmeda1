@@ -55,6 +55,7 @@ export default function GenerateButton  () {
   const form = useForm<Inputs>({
     resolver: zodResolver(promptSchema),
     defaultValues: {
+      count:1,
       seed:0,
       model:paramModel
     },
@@ -85,6 +86,29 @@ export default function GenerateButton  () {
     }
   }
 
+  async function saveGallery(save: any) {
+        // Remove the data:image/png;base64, prefix if it exists
+        const base64WithoutPrefix = save.image.replace(/^data:image\/[a-z]+;base64,/, '');
+
+        // Decode base64 string
+        const decodedData = atob(base64WithoutPrefix);
+
+        // Create a Uint8Array from the decoded data
+        const uint8Array = new Uint8Array(decodedData.length);
+        for (let i = 0; i < decodedData.length; i++) {
+          uint8Array[i] = decodedData.charCodeAt(i);
+        }
+       const blob = new Blob([uint8Array], { type: 'image/png' });
+
+       // Create a File from the Blob
+        const file = new File([blob], `${save.data.prompt}.png`||'image.png', { type: 'image/png' });
+
+        const gen = await appwriteStorageService.uploadGenerated(file)
+        const preview = await appwriteStorageService.previewFile({id:gen!.$id,bucket:'6584a911a70baf1b4a58'}) 
+        const gal = {image:[gen!.$id],prompt:save.data.prompt,model:save.data.modelXL, user:save.user,preview:preview}
+        const gallery = await appwriteDBService.newGalleryItem(gal)
+  }
+
   function onSubmit(data: Inputs){
     // const cost = Number(data.count)*5
     startTransition(async()=>{
@@ -106,10 +130,17 @@ export default function GenerateButton  () {
               })
               const _img = res.data.image
               setImgsrc(_img)
-            } catch (error) {
-              toast.message("Error occured while logging in", {
-                description: `${error}`,
-              })
+              const save = {image:res.data.image, data:data, user:uid}
+              saveGallery(save)
+            } catch (error:any) {
+              if(error?.response?.status === 403){
+                melaModal.onOpen()
+              }
+              else{
+                toast.message("Error occured:", {
+                  description: `${error}`,
+                })
+              }
             }
           }
           else {
@@ -132,26 +163,8 @@ export default function GenerateButton  () {
          
          const _img = res.data.image
          setImgsrc(_img)
-             // Remove the data:image/png;base64, prefix if it exists
-          const base64WithoutPrefix = _img.replace(/^data:image\/[a-z]+;base64,/, '');
-
-          // Decode base64 string
-          const decodedData = atob(base64WithoutPrefix);
-
-          // Create a Uint8Array from the decoded data
-          const uint8Array = new Uint8Array(decodedData.length);
-          for (let i = 0; i < decodedData.length; i++) {
-            uint8Array[i] = decodedData.charCodeAt(i);
-          }
-         const blob = new Blob([uint8Array], { type: 'image/png' });
-
-         // Create a File from the Blob
-          const file = new File([blob], `${data.prompt}.png`||'image.png', { type: 'image/png' });
-
-          const gen = await appwriteStorageService.uploadGenerated(file)
-          const preview = await appwriteStorageService.previewFile({id:gen!.$id,bucket:'6584a911a70baf1b4a58'}) 
-          const gal = {image:[gen!.$id],prompt:data.prompt,model:data.model, user:uid,preview:preview}
-          const gallery = await appwriteDBService.newGalleryItem(gal)
+         const save = {image:res.data.image, data:data, user:uid}
+         saveGallery(save)
         }
         }
       }catch (error:any) {
@@ -192,7 +205,7 @@ export default function GenerateButton  () {
               )}
             />
             <div className="flex flex-row gap-8 items-center justify-start">
-              <FormItem className="w-24 flex flex-row gap-4 items-baseline">
+              {/* <FormItem className="w-24 flex flex-row gap-4 items-baseline">
                 <FormLabel>Count</FormLabel>
                 <FormControl>
                   <Input
@@ -210,7 +223,7 @@ export default function GenerateButton  () {
                 <UncontrolledFormMessage
                   message={form.formState.errors.count?.message}
                 />
-              </FormItem>
+              </FormItem> */}
               <FormItem className="w-24 flex flex-row items-baseline gap-4">
                 <FormLabel>Transparent?</FormLabel>
                 <Toggle className="px-2" variant="outline" aria-label="Toggle background remove" onClick={()=>{setBgRemove(!bgRemove)}}>

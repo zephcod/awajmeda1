@@ -16,6 +16,7 @@ import { Form,
 import axios from 'axios'
 import { absoluteUrl } from '@/lib/utils'
 import appwriteAuthService from '@/db/appwrite_auth'
+import appwriteDBService from '@/db/appwrite_db'
 
 
 const BackgroundRemover = () => {
@@ -49,6 +50,29 @@ const BackgroundRemover = () => {
       }
     }
 
+    async function saveGallery(save: any) {
+      // Remove the data:image/png;base64, prefix if it exists
+      const base64WithoutPrefix = save.image.replace(/^data:image\/[a-z]+;base64,/, '');
+
+      // Decode base64 string
+      const decodedData = atob(base64WithoutPrefix);
+
+      // Create a Uint8Array from the decoded data
+      const uint8Array = new Uint8Array(decodedData.length);
+      for (let i = 0; i < decodedData.length; i++) {
+        uint8Array[i] = decodedData.charCodeAt(i);
+      }
+     const blob = new Blob([uint8Array], { type: 'image/png' });
+
+     // Create a File from the Blob
+      const file = new File([blob], 'image.png', { type: 'image/png' });
+
+      const gen = await appwriteStorageService.uploadGenerated(file)
+      const preview = await appwriteStorageService.previewFile({id:gen!.$id,bucket:'6584a911a70baf1b4a58'}) 
+      const gal = {image:[gen!.$id],prompt:'remove background',model:"bgremover", user:save.user,preview:preview}
+      const gallery = await appwriteDBService.newGalleryItem(gal)
+}
+
     function convertFileToBase64() {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -76,9 +100,10 @@ const BackgroundRemover = () => {
               },
               
             })
-            // console.log(res)
             const _img = res.data
             setImgsrc(_img)
+            const save = {image:_img, user:uid}
+            saveGallery(save)
           }
         }catch (error:any) {
         if(error?.response?.status === 403){

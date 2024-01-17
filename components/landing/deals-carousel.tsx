@@ -12,13 +12,8 @@ import {
 import styles from '@/components/landing/deals.module.css'
 import Link from 'next/link'
 import Lottie from "lottie-react"
-import imageByIndex from './deal-index'
 import { deals, dealByIndex } from './deal-index'
-import { AspectRatio } from '../ui/aspect_ratio'
-import Image from "next/image"
 import { Icons } from '../icons'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import img from '@/public/blob/awajai-rocket.json'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '../ui/button'
 import { Separator } from '../ui/separator'
