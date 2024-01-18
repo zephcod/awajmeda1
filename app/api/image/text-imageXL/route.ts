@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decreaseCoins, checkApiLimit } from '@/lib/api-limit'
-import { getTextImageXL } from "@/app/_actions/ai/text-imageXL";
 import axios from "axios";
 
 export async function POST(request: NextRequest) {
-  const {searchParams} = new URL(request.url)
   const post = await request.json()
   const body = post.params
-  const _prompt = searchParams.get('prompt')
-  const _model = searchParams.get('model')
-  // const _cost = searchParams.get('cost')
-  // const _uid = searchParams.get('des')
   const _cost = body.cost
   const _uid = body.des
 
@@ -20,7 +14,6 @@ export async function POST(request: NextRequest) {
   }
 
   const pref = {cost:Number(_cost), uid:id}
-  console.log(body)
 
     const freeTrial = await checkApiLimit(pref)
     if (!freeTrial){
@@ -28,12 +21,24 @@ export async function POST(request: NextRequest) {
     }
     
     else{
-      const res = await getTextImageXL(body)
-      let jsonRes = {
-        status:'success',
-        image:res
-      }
+        const options = {
+            method: 'POST',
+            url: 'https://api.dezgo.com/text2image_sdxl',
+            headers: {
+              'content-type': 'application/json',
+              'X-Dezgo-Key': 'DEZGO-B8406D63008CC915DC890825F155885D52E679A94E46F679835D9DFEF73AFE9C9ACC071A',
+            },
+            data: { 
+                  "prompt":body.prompt,
+                  "model":body.model,
+                  "guidance":body.guidance,
+                },
+            responseType: "arraybuffer"
+          };
+          const response = await axios.request(options)
+       
+        const base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
         await decreaseCoins(pref)
-        return NextResponse.json(jsonRes)
+        return Response.json(base64ImageString)
       }
 }

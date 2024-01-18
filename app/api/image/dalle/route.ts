@@ -35,14 +35,14 @@ try{
             n: 1,
             size: "1024x1024",
           });
-
-          await decreaseCoins(pref)
+          console.log(res)
           const url = res.data[0].url
-
+          
           if (url) {
             try {
-              const image = axios.get(url,{responseType:'arraybuffer'})
-              const base64ImageString = Buffer.from((await image).data, 'binary').toString('base64')
+              // await decreaseCoins(pref)
+              const image = await axios.get(url,{responseType:'arraybuffer'})
+              const base64ImageString = Buffer.from((image).data, 'binary').toString('base64')
 
               let jsonRes = {
                 status:'success',
@@ -54,7 +54,10 @@ try{
               console.log(error)
               return new NextResponse('Image not generated', {status:400})
             }
+          } else{
+            return new NextResponse('Image can not be generated', {status:407})
           }
+
         }
 
   } catch (error) {

@@ -130,7 +130,7 @@ export default function GenerateButton  () {
               })
               const _img = res.data.image
               setImgsrc(_img)
-              const save = {image:res.data.image, data:data, user:uid}
+              const save = {image:_img, data:data, user:uid}
               saveGallery(save)
             } catch (error:any) {
               if(error?.response?.status === 403){
@@ -161,9 +161,9 @@ export default function GenerateButton  () {
            }
          })
          
-         const _img = res.data.image
+         const _img = res.data
          setImgsrc(_img)
-         const save = {image:res.data.image, data:data, user:uid}
+         const save = {image:_img, data:data, user:uid}
          saveGallery(save)
         }
         }

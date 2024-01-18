@@ -47,18 +47,18 @@ export const demos: { name: string; items: Item[] }[] = [
         description: 'Organize routes without affecting URL paths',
         icon: Tv2,
       },
-      {
-        name: 'Chat',
-        slug: 'chat',
-        description: 'Organize routes without affecting URL paths',
-        icon: Bot,
-      },
-      {
-        name: 'Templates',
-        slug: 'template',
-        description: 'Create UI that is shared across routes',
-        icon: HeartIcon,
-      },
+      // {
+      //   name: 'Chat',
+      //   slug: 'chat',
+      //   description: 'Organize routes without affecting URL paths',
+      //   icon: Bot,
+      // },
+      // {
+      //   name: 'Templates',
+      //   slug: 'template',
+      //   description: 'Create UI that is shared across routes',
+      //   icon: HeartIcon,
+      // },
       {
         name: 'Guides',
         slug: 'guide',
