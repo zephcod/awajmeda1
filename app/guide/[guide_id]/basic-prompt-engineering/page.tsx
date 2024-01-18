@@ -24,7 +24,7 @@ import Unreal from '@/public/guide/unreal.png'
 
 const PromptEngineering = () => {
   return (
-    <div className='flex flex-col items-start justify-between p-4 lg:p-6 max-w-4xl'>
+    <div className='flex flex-col items-start justify-between p-4 lg:p-8 max-w-4xl'>
       <Breadcrumbs
         segments={[
           {
@@ -32,12 +32,16 @@ const PromptEngineering = () => {
             href: "/guide",
           },
           {
-            title: "Prompts",
-            href: "/guide",
+            title: "3. Prompting",
+            href: "/guide/prompting",
+          },
+          {
+            title: "Basics",
+            href: "/guide/prompting/basic-prompt-engineering",
           },
         ]}
       />
-      <p className='w-full text-end text-muted-foreground my-2'>Published on January 08, 2024  •  3min</p>
+      <p className='w-full text-end text-muted-foreground font-light text-sm my-4'>Published on January 08, 2024  •  3min</p>
       <h1 className="font-heading text-3xl font-bold leading-[1.1] md:text-4xl">Basics of Prompt Engineering</h1>
       <p className='text-muted-foreground mt-3'>If you&apos;re new to the world of AI art, prompt engineering may look daunting, 
       but at its most basic, it&apos;s just using words to paint a picture of what you want to create. 

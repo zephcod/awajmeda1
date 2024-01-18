@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decreaseCoins, checkApiLimit } from '@/lib/api-limit'
-import Configuration, { OpenAI } from "openai";
+import { OpenAI } from "openai";
 import axios from "axios";
-
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -14,13 +9,9 @@ const openai = new OpenAI({
 
 
 export async function POST(request: Request) {
-
-    const {searchParams} = new URL(request.url)
-    
     const body = await request.json()
     const prompt = body.params.prompt ||''
-    const _model = searchParams.get('model')
-    const _cost = searchParams.get('cost')
+    const _cost = body.params.cost
     const _uid = body.params.des
   
     let id = ''
@@ -30,7 +21,6 @@ export async function POST(request: Request) {
   
 try{
     const pref = {cost:Number(_cost), uid:id}
-    const sent = {prompt:prompt, model:_model}
   
       const freeTrial = await checkApiLimit(pref)
       if (!freeTrial){
@@ -47,7 +37,6 @@ try{
           });
 
           await decreaseCoins(pref)
-          console.log(res.data[0])
           const url = res.data[0].url
 
           if (url) {

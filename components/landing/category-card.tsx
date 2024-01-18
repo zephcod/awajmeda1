@@ -18,7 +18,7 @@ interface CategoryCardProps {
 export function CategoryCard({ category }: CategoryCardProps) {
 
   return (
-    <Link href={`/guide/${category.id}`}>
+    <Link href={category.id}>
       <span className="sr-only">{category.title}</span>
       <Card className="relative flex h-full w-full flex-col items-center justify-center ring-1 ring-border overflow-hidden rounded-lg bg-transparent transition-colors hover:bg-muted/50">
         <CardHeader className="p-2">

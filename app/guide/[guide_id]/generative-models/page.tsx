@@ -12,10 +12,27 @@ import Link from 'next/link'
 import { Icons } from '@/components/icons'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown_menu'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Breadcrumbs } from '@/components/pagers/breadcrumbs'
 
 const GenerativeModels = () => {
   return (
-    <div className='w-full flex flex-col max-w-7xl mx-auto p-2 md:p-4'>
+    <div className='w-full flex flex-col max-w-7xl mx-auto p-4 md:p-8'>
+      <Breadcrumbs
+        segments={[
+          {
+            title: "Awaj AI Guides",
+            href: "/guide",
+          },
+          {
+            title: "2. Generative AI",
+            href: "/guide/generative-ai",
+          },
+          {
+            title: "Generative Models",
+            href: "/guide/generative-ai/generative-models",
+          },
+        ]}
+      />
       <ContentTitleSection
           id="XL-Models"
           aria-labelledby="featured-products-heading"

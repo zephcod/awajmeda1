@@ -67,7 +67,7 @@ export interface DataTableFilterableColumn<TData>
 export interface Category {
   id:string; 
   title: string; 
-  cat:string, 
+  image:string, 
   desc: string; 
   icon: React.ComponentType<{ className?: string }>
   
